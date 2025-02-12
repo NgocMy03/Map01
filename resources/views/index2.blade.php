@@ -8,7 +8,7 @@
     <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
     <link rel="stylesheet" href="https://unpkg.com/leaflet-control-geocoder/dist/Control.Geocoder.css" />
     <script src="https://unpkg.com/leaflet-control-geocoder/dist/Control.Geocoder.js"></script>
-    
+
     <!-- Thư viện dẫn đường -->
     <link rel="stylesheet" href="https://unpkg.com/leaflet-routing-machine/dist/leaflet-routing-machine.css" />
     <script src="https://unpkg.com/leaflet-routing-machine/dist/leaflet-routing-machine.js"></script>
@@ -32,7 +32,10 @@
         return [
             'coords' => array_map('floatval', explode(',', $store->toadoGPS)), // Chuyển tọa độ thành mảng số
             'name' => $store->ten,
-            'popupContent' => "<h3>{$store->ten}</h3><p>{$store->diachi}</p><p>SĐT: {$store->SDT}</p>"
+            'popupContent' => "<img src=\"images/{$store->hinh}\" width=\"45\">
+                                <h3>{$store->ten}</h3>
+                                <p>{$store->diachi}</p>
+                                <p>SĐT: {$store->SDT}</p>"
         ];
     });
     @endphp
@@ -45,7 +48,7 @@
         }).addTo(map);
 
         var locations = @json($locations);
-        
+
         var markers = [];
         var control = null;
 

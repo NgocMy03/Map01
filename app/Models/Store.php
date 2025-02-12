@@ -12,6 +12,7 @@ class Store extends Model
         'ten',
         'diachi',
         'SDT',
-        'toadoGPS'
+        'toadoGPS',
+        'hinh'
     ];
 }

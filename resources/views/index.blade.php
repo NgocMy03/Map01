@@ -24,7 +24,7 @@
 @php
     $locations = $stores->map(function ($store) {
     return [
-            'coords' => array_map('floatval', explode(',', $store->toadoGPS)), // Chuyển chuỗi tọa độ thành mảng số
+            'coords' => array_map('floatval', explode(',', $store->toadoGPS)), // Chuyển chuỗi tọa độ thành mảng số [10.09808, 969]
             'popupContent' => "<h3>{$store->ten}</h3><p>{$store->diachi}</p><p>SĐT: {$store->SDT}</p>"
         ];
     });
