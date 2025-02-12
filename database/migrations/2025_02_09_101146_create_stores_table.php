@@ -17,7 +17,7 @@ return new class extends Migration
             $table->id();
             $table->string('ten');
             $table->string('diachi');
-            $table->string('SDT',10);
+            $table->string('SDT',20);
             $table->string('toadoGPS', 100)->nullable();
             $table->timestamps();
         });

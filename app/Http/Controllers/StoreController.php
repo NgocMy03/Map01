@@ -9,7 +9,7 @@ class StoreController extends Controller
 {
     public function MapRealLife()
     {
-        $stores = Store::all();
+        $stores = Store::all(); //Select * from store
         return view('index', compact('stores'));
     }
 
