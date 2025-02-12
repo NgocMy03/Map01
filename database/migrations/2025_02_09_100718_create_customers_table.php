@@ -17,6 +17,9 @@ return new class extends Migration
             $table->id();
             $table->string('hoten');
             $table->string('SDT',10)->unique();
+            $table->string('lichsugiaodich');
+            $table->string('toadoGPS', 100)->nullable();
+            $table->string('chitiet')->nullable();
             $table->timestamps();
         });
     }

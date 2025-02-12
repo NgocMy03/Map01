@@ -9,6 +9,9 @@ class Store extends Model
 {
     use HasFactory;
     protected $fillalbe = [
-        'ten'
+        'ten',
+        'diachi',
+        'SDT',
+        'toadoGPS'
     ];
 }

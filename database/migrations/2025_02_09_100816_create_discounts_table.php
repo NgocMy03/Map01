@@ -18,7 +18,7 @@ return new class extends Migration
             $table->string('chuongtrinhKM');
             $table->date('thoigianapdung');
 
-            $table->emun('muckhuyenmai',['phantram','quatang'])->default('phantram');
+            $table->enum('muckhuyenmai',['phantram','quatang'])->default('phantram');
             $table->timestamps();
         });
     }

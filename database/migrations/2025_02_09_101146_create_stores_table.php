@@ -15,6 +15,10 @@ return new class extends Migration
     {
         Schema::create('stores', function (Blueprint $table) {
             $table->id();
+            $table->string('ten');
+            $table->string('diachi');
+            $table->string('SDT',10);
+            $table->string('toadoGPS', 100)->nullable();
             $table->timestamps();
         });
     }
