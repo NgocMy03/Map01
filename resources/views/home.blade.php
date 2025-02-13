@@ -169,7 +169,7 @@
                                         <div class="divider-custom-line"></div>
                                     </div>
                                     <!-- Store Modal - Image-->
-                                    <img class="img-fluid rounded mb-5" src="assets/img/stores/vinmart.png" alt="..." />
+                                    <img class="img-fluid rounded mb-5" src="assets/img/stores/vinmart.png" alt="..." width="200"/>
                                     <!-- Store Modal - Text-->
                                     <p class="mb-4">Vinmart là hệ thống siêu thị được thành lập bởi tập đoàn Vingroup, Việt Nam. Hệ thống này khai trương ngày 20 tháng 11 năm 2014. Theo thống kê của Vietnam Report, tính đến tháng 11/2017, VinMart và chuỗi cửa hàng con VinMart+ nằm top 2 nhà bán lẻ được người tiêu dùng quan tâm nhất và top 4 trên bảng xếp hạng 10 nhà bán lẻ uy tín năm 2017.</p>
                                     <button class="btn btn-primary" data-bs-dismiss="modal">

@@ -115,7 +115,6 @@
                             map.setView(location.coords, 15);
                             L.popup().setLatLng(location.coords).setContent(location.popupContent)
                                 .openOn(map);
-                            getUserLocationAndRoute(location.coords);
                             suggestions.innerHTML = "";
                         });
                         suggestions.appendChild(li);
