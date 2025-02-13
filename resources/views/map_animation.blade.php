@@ -40,9 +40,11 @@
         <button id="locate-btn" title="Xác định vị trí của bạn">
             <i class="fa-solid fa-location-crosshairs"></i>
         </button>
-
         <button id="nearest-store-btn" title="Tìm cửa hàng gần nhất">
             <i class="fa-solid fa-store"></i>
+        </button>
+        <button class="d-none" id="close-store-routing">
+            <i class="fa-solid fa-x"></i>
         </button>
     </div>
 
@@ -54,7 +56,10 @@
                 'popupContent' => "<img src=\"assets/img/stores/{$store->hinh}\" width=\"45\">
                                 <h3>{$store->ten}</h3>
                                 <p>{$store->diachi}</p>
-                                <p>SĐT: {$store->SDT}</p>",
+                                <p>SĐT: {$store->SDT}</p>
+                                <button class=\"btn btn-primary btn-routing-move\" onclick=\"getUserLocationAndRoute([{$store->toadoGPS}])\">
+                                    <i class=\"fa-solid fa-wheelchair-move pe-2\"></i>Đường đi
+                                </button>",
             ];
         });
     @endphp
@@ -136,6 +141,7 @@
 
                     // Điều chỉnh bản đồ về vị trí người dùng
                     map.setView([userLat, userLng], 14);
+                    document.getElementById("close-store-routing").classList.remove("d-none");
                 }, function(error) {
                     alert("Không thể lấy được vị trí của bạn: " + error.message);
                 });
@@ -235,11 +241,19 @@
                         .setContent(nearestStore.popupContent)
                         .openOn(map);
                     }
+                    document.getElementById("close-store-routing").classList.remove("d-none");
                 }, function (error) {
                     alert("Không thể lấy vị trí của bạn: " + error.message);
                 });
             } else {
                 alert("Trình duyệt không hỗ trợ định vị.");
+            }
+        });
+
+        document.getElementById("close-store-routing").addEventListener("click", function () {
+            if (control) {
+                map.removeControl(control);
+                document.getElementById("close-store-routing").classList.add("d-none");
             }
         });
 

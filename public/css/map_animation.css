@@ -104,3 +104,12 @@
     cursor: pointer;
 }
 
+
+#close-store-routing {
+    position: absolute;
+    bottom: 42%;
+    right: 3%;
+    border: none;
+    background: none;
+    z-index: 1000;
+}
