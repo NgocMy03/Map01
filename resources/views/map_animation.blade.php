@@ -58,7 +58,7 @@
                                 <p>{$store->diachi}</p>
                                 <p>SĐT: {$store->SDT}</p>
                                 <button class=\"btn btn-primary btn-routing-move\" onclick=\"getUserLocationAndRoute([{$store->toadoGPS}])\">
-                                    <i class=\"fa-solid fa-wheelchair-move pe-2\"></i>Đường đi
+                                    <i class=\"fa-solid fa-car pe-2\"></i>Đường đi
                                 </button>",
             ];
         });
