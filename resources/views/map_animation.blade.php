@@ -42,7 +42,7 @@
         </button>
 
         <button id="nearest-store-btn" title="Tìm cửa hàng gần nhất">
-                <i class="fa-solid fa-store"></i>
+            <i class="fa-solid fa-store"></i>
         </button>
     </div>
 
@@ -187,10 +187,10 @@
                         // Kinh độ và vĩ độ của cửa hàng trong ds
                         var storeLat = store.coords[0];
                         var storeLng = store.coords[1];
-                        
+
                         // Tính khoảng cách giữa vị trí hiện tại của người dùng và cửa hàng
                         var distance = getDistance(userLat, userLng, storeLat, storeLng);
-                        
+
                         // Nếu khoảng cách trả ra nhỏ hơn minDistance thì cập nhật lại nearestStore
                         if (distance < minDistance) {
                             minDistance = distance;
@@ -199,18 +199,18 @@
                         /*
                             Ví dụ: duyệt ds có 3 cửa hàng với khoảng cách lần lượt là 5 km, 3 km, 7 km.
 
-                            lần 1: Store A (5 km) 
-                            → distance = 5 km 
+                            lần 1: Store A (5 km)
+                            → distance = 5 km
                             5 < Infinity → Cập nhật: minDistance = 5
                             => nearestStore = Store A
 
                             lần 2: Store B (3 km)
-                            → distance = 3 km 
+                            → distance = 3 km
                             3 < 5 (minDistance) → Cập nhật: minDistance = 3
                             => nearestStore = Store B
 
                             lần 3: Store C (7 km)
-                            → distance = 7 km 
+                            → distance = 7 km
                             7 > 3 (minDistance) → Không cập nhật
                             => Kết quả: nearestStore = Store B (3 km gần nhất).
                         */
@@ -219,7 +219,7 @@
                     // Nếu tìm được điểm gần nhất thì vẽ đường đi từ vị trí người dùng đến cửa hàng đó
                     if (nearestStore) {
                         if (control) {
-                            // xoá tuyến đường cũ nếu đã tồn tại 
+                            // xoá tuyến đường cũ nếu đã tồn tại
                             map.removeControl(control);
                         }
                         control = L.Routing.control({
@@ -250,10 +250,10 @@
             const dLat = (lat2 - lat1) * Math.PI / 180;
             const dLon = (lon2 - lon1) * Math.PI / 180;
 
-            // Công thức Haversine 
+            // Công thức Haversine
             // Tính khoảng cách theo vĩ độ (Math.sin(dLat / 2) * Math.sin(dLat / 2)).
             // Tính khoảng cách theo kinh độ (Math.cos(lat1 * Math.PI / 180) * Math.cos(lat2 * Math.PI / 180) * Math.sin(dLon / 2) * Math.sin(dLon / 2)).
-            const a = Math.sin(dLat / 2) * Math.sin(dLat / 2) + 
+            const a = Math.sin(dLat / 2) * Math.sin(dLat / 2) +
                 Math.cos(lat1 * Math.PI / 180) * Math.cos(lat2 * Math.PI / 180) *
                 Math.sin(dLon / 2) * Math.sin(dLon / 2);
             // hàm Math.atan2(y, x) trả về góc giữa (x, y) với gốc tọa độ => Công thức tính góc cung lớn nhất giữa hai điểm trên mặt cầu
