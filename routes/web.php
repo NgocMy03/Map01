@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\HomeController;
 use App\Http\Controllers\StoreController;
 use Illuminate\Support\Facades\Route;
 
@@ -13,6 +14,6 @@ use Illuminate\Support\Facades\Route;
 | contains the "web" middleware group. Now create something great!
 |
 */
-
+Route::get('/', [HomeController::class, 'home'])->name('Home');
 Route::get('/map-real-life', [StoreController::class, 'MapRealLife'])->name('MapRealLife');
 Route::get('/map-animation', [StoreController::class, 'MapAnimation'])->name('MapAnimation');

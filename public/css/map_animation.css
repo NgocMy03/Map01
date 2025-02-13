@@ -1,0 +1,75 @@
+#map {
+    position: relative;
+    height: 800px;
+    width: 100%;
+}
+
+#search-box {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 300px;
+    padding: 8px;
+    margin-bottom: 10px;
+    z-index: 999;
+}
+
+#suggestions {
+    position: fixed;
+    /* margin-top: 84px; */
+    list-style-type: none;
+    padding: 0;
+    top: 2.625rem;
+    left: 0;
+    z-index: 999;
+    width: 300px;
+}
+
+#suggestions li {
+    padding: 5px;
+    cursor: pointer;
+    background: #f8f9fa;
+    border-bottom: 1px solid #ccc;
+}
+
+#suggestions li:hover {
+    background: #e9ecef;
+}
+
+.leaflet-touch .leaflet-bar a {
+    width: 40px;
+    height: 40px;
+    line-height: 40px;
+}
+
+.leaflet-touch .leaflet-control-layers, .leaflet-touch .leaflet-bar {
+    position: fixed;
+    bottom: 5%;
+    right: 2%;
+}
+
+#back-to-home {
+    position: fixed;
+    top: 0;
+    right: 2%;
+    z-index: 1000;
+    font-size: 2rem;
+    color: black;
+    background: white;
+    padding: 5px;
+}
+
+#back-to-home:hover {
+    opacity: 0.8;
+}
+
+#search-btn {
+    position: fixed;
+    top: 0;
+    left: 265px;
+    z-index: 1000;
+    background: none;
+    padding: 8px 6px;
+    border-radius: 5px;
+    border: none;
+}
