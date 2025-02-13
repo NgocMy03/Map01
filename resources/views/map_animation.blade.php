@@ -60,6 +60,7 @@
                                 <button class=\"btn btn-primary btn-routing-move\" onclick=\"getUserLocationAndRoute([{$store->toadoGPS}])\">
                                     <i class=\"fa-solid fa-car pe-2\"></i>Đường đi
                                 </button>",
+                'icon' => "assets/img/stores/{$store->hinh}",
             ];
         });
     @endphp
@@ -78,14 +79,25 @@
 
         // Thêm marker cho mỗi địa điểm
         locations.forEach(location => {
-            var marker = L.marker(location.coords).addTo(map);
+            var customIcon = L.icon({
+                iconUrl: location.icon, // Đường dẫn icon từ PHP
+                iconSize: [32, 32], // Kích thước icon (có thể thay đổi)
+                iconAnchor: [16, 32], // Điểm neo của icon (tâm icon so với vị trí marker)
+                popupAnchor: [0, -32] // Điểm neo của popup khi mở
+            });
+
+            var marker = L.marker(location.coords, {
+                icon: customIcon
+            }).addTo(map);
             marker.bindPopup(location.popupContent);
+
             markers.push({
                 marker,
                 name: location.name,
                 coords: location.coords
             });
         });
+
 
         // Gợi ý danh sách khi nhập tìm kiếm
         var searchBox = document.getElementById('search-box');
@@ -176,9 +188,9 @@
 
 
     <script>
-        document.getElementById("nearest-store-btn").addEventListener("click", function () {
+        document.getElementById("nearest-store-btn").addEventListener("click", function() {
             if (navigator.geolocation) {
-                navigator.geolocation.getCurrentPosition(function (position) {
+                navigator.geolocation.getCurrentPosition(function(position) {
                     // Lấy toạ độ vị trí người dùng lưu => lưu kinh độ, vĩ độ ng dùng
                     var userLat = position.coords.latitude;
                     var userLng = position.coords.longitude;
@@ -238,11 +250,11 @@
                         // Hiển thị bản đồ tại vị trí cửa hàng gần nhất
                         map.setView(nearestStore.coords, 15);
                         L.popup().setLatLng(nearestStore.coords)
-                        .setContent(nearestStore.popupContent)
-                        .openOn(map);
+                            .setContent(nearestStore.popupContent)
+                            .openOn(map);
                     }
                     document.getElementById("close-store-routing").classList.remove("d-none");
-                }, function (error) {
+                }, function(error) {
                     alert("Không thể lấy vị trí của bạn: " + error.message);
                 });
             } else {
@@ -250,7 +262,7 @@
             }
         });
 
-        document.getElementById("close-store-routing").addEventListener("click", function () {
+        document.getElementById("close-store-routing").addEventListener("click", function() {
             if (control) {
                 map.removeControl(control);
                 document.getElementById("close-store-routing").classList.add("d-none");
