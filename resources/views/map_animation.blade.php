@@ -22,7 +22,8 @@
     <script src="https://use.fontawesome.com/releases/v6.3.0/js/all.js" crossorigin="anonymous"></script>
 
     <!-- CSS cho Map Animation -->
-    <link rel="stylesheet" href="{{ asset('css/map_animation.css') }}"></link>
+    <link rel="stylesheet" href="{{ asset('css/map_animation.css') }}">
+    </link>
 </head>
 
 <style>
@@ -38,6 +39,10 @@
         <div id="map"></div>
         <button id="locate-btn" title="Xác định vị trí của bạn">
             <i class="fa-solid fa-location-crosshairs"></i>
+        </button>
+
+        <button id="nearest-store-btn" title="Tìm cửa hàng gần nhất">
+                <i class="fa-solid fa-store"></i>
         </button>
     </div>
 
@@ -141,9 +146,9 @@
     </script>
 
     <script>
-         document.getElementById("locate-btn").addEventListener("click", function () {
+        document.getElementById("locate-btn").addEventListener("click", function() {
             if (navigator.geolocation) {
-                navigator.geolocation.getCurrentPosition(function (position) {
+                navigator.geolocation.getCurrentPosition(function(position) {
                     var userLat = position.coords.latitude;
                     var userLng = position.coords.longitude;
 
@@ -151,15 +156,110 @@
                         title: "Vị trí của bạn"
                     }).addTo(map);
                     userMarker.bindPopup("<h3>Vị trí của bạn</h3>").openPopup();
-                    
+
                     map.setView([userLat, userLng], 14);
-                }, function (error) {
+                }, function(error) {
                     alert("Không thể lấy vị trí của bạn: " + error.message);
                 });
             } else {
                 alert("Trình duyệt của bạn không hỗ trợ Geolocation.");
             }
         });
+    </script>
+
+
+
+    <script>
+        document.getElementById("nearest-store-btn").addEventListener("click", function () {
+            if (navigator.geolocation) {
+                navigator.geolocation.getCurrentPosition(function (position) {
+                    // Lấy toạ độ vị trí người dùng lưu => lưu kinh độ, vĩ độ ng dùng
+                    var userLat = position.coords.latitude;
+                    var userLng = position.coords.longitude;
+
+                    // Khởi tạo biến lưu cửa hàng gần nhất và khoảng cách nhỏ nhất
+                    var nearestStore = null;
+                    var minDistance = Infinity;
+
+                    // Duyệt ds store và tính khoảng cách tìm cửa hàng gần nhất
+                    locations.forEach(store => {
+
+                        // Kinh độ và vĩ độ của cửa hàng trong ds
+                        var storeLat = store.coords[0];
+                        var storeLng = store.coords[1];
+                        
+                        // Tính khoảng cách giữa vị trí hiện tại của người dùng và cửa hàng
+                        var distance = getDistance(userLat, userLng, storeLat, storeLng);
+                        
+                        // Nếu khoảng cách trả ra nhỏ hơn minDistance thì cập nhật lại nearestStore
+                        if (distance < minDistance) {
+                            minDistance = distance;
+                            nearestStore = store;
+                        }
+                        /*
+                            Ví dụ: duyệt ds có 3 cửa hàng với khoảng cách lần lượt là 5 km, 3 km, 7 km.
+
+                            lần 1: Store A (5 km) 
+                            → distance = 5 km 
+                            5 < Infinity → Cập nhật: minDistance = 5
+                            => nearestStore = Store A
+
+                            lần 2: Store B (3 km)
+                            → distance = 3 km 
+                            3 < 5 (minDistance) → Cập nhật: minDistance = 3
+                            => nearestStore = Store B
+
+                            lần 3: Store C (7 km)
+                            → distance = 7 km 
+                            7 > 3 (minDistance) → Không cập nhật
+                            => Kết quả: nearestStore = Store B (3 km gần nhất).
+                        */
+                    });
+
+                    // Nếu tìm được điểm gần nhất thì vẽ đường đi từ vị trí người dùng đến cửa hàng đó
+                    if (nearestStore) {
+                        if (control) {
+                            // xoá tuyến đường cũ nếu đã tồn tại 
+                            map.removeControl(control);
+                        }
+                        control = L.Routing.control({
+                            waypoints: [
+                                L.latLng(userLat, userLng),
+                                L.latLng(nearestStore.coords[0], nearestStore.coords[1])
+                            ],
+                            routeWhileDragging: true
+                        }).addTo(map);
+                        // Hiển thị bản đồ tại vị trí cửa hàng gần nhất
+                        map.setView(nearestStore.coords, 15);
+                        L.popup().setLatLng(nearestStore.coords)
+                        .setContent(nearestStore.popupContent)
+                        .openOn(map);
+                    }
+                }, function (error) {
+                    alert("Không thể lấy vị trí của bạn: " + error.message);
+                });
+            } else {
+                alert("Trình duyệt không hỗ trợ định vị.");
+            }
+        });
+
+        // Hàm tính khoảng cách giữa 2 điểm theo công thức Haversine => Xác định khoảng cách nếu biết kinh độ(lon) và vĩ độ(lat) của 2 điểm
+        function getDistance(lat1, lon1, lat2, lon2) {
+            const R = 6371; // Bán kính xấp xĩ của Trái Đất (km)
+            // Đổi từ độ sang radian
+            const dLat = (lat2 - lat1) * Math.PI / 180;
+            const dLon = (lon2 - lon1) * Math.PI / 180;
+
+            // Công thức Haversine 
+            // Tính khoảng cách theo vĩ độ (Math.sin(dLat / 2) * Math.sin(dLat / 2)).
+            // Tính khoảng cách theo kinh độ (Math.cos(lat1 * Math.PI / 180) * Math.cos(lat2 * Math.PI / 180) * Math.sin(dLon / 2) * Math.sin(dLon / 2)).
+            const a = Math.sin(dLat / 2) * Math.sin(dLat / 2) + 
+                Math.cos(lat1 * Math.PI / 180) * Math.cos(lat2 * Math.PI / 180) *
+                Math.sin(dLon / 2) * Math.sin(dLon / 2);
+            // hàm Math.atan2(y, x) trả về góc giữa (x, y) với gốc tọa độ => Công thức tính góc cung lớn nhất giữa hai điểm trên mặt cầu
+            const c = 2 * Math.atan2(Math.sqrt(a), Math.sqrt(1 - a));
+            return R * c; // Khoảng cách giữa hai điểm, đơn vị (km)
+        }
     </script>
 </body>
 
