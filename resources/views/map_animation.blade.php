@@ -25,6 +25,10 @@
     <link rel="stylesheet" href="{{ asset('css/map_animation.css') }}"></link>
 </head>
 
+<style>
+
+</style>
+
 <body>
     <div class="container-fluid p-0">
         <input type="text" id="search-box" class="form-control" placeholder="Tìm kiếm địa điểm...">
@@ -32,6 +36,9 @@
         <button id="search-btn" type="button"><i class="fa-solid fa-magnifying-glass"></i></button>
         <ul id="suggestions"></ul>
         <div id="map"></div>
+        <button id="locate-btn" title="Xác định vị trí của bạn">
+            <i class="fa-solid fa-location-crosshairs"></i>
+        </button>
     </div>
 
     @php
@@ -131,6 +138,28 @@
                 alert("Trình duyệt của bạn không hỗ trợ Geolocation.");
             }
         }
+    </script>
+
+    <script>
+         document.getElementById("locate-btn").addEventListener("click", function () {
+            if (navigator.geolocation) {
+                navigator.geolocation.getCurrentPosition(function (position) {
+                    var userLat = position.coords.latitude;
+                    var userLng = position.coords.longitude;
+
+                    var userMarker = L.marker([userLat, userLng], {
+                        title: "Vị trí của bạn"
+                    }).addTo(map);
+                    userMarker.bindPopup("<h3>Vị trí của bạn</h3>").openPopup();
+                    
+                    map.setView([userLat, userLng], 14);
+                }, function (error) {
+                    alert("Không thể lấy vị trí của bạn: " + error.message);
+                });
+            } else {
+                alert("Trình duyệt của bạn không hỗ trợ Geolocation.");
+            }
+        });
     </script>
 </body>
 
