@@ -13,11 +13,11 @@ return new class extends Migration
      */
     public function up()
     {
-        Schema::create('list_products', function (Blueprint $table) {
+        Schema::create('schedules', function (Blueprint $table) {
             $table->id();
-            $table->integer('soluong');
-            $table->foreignId('product_id')->constrained('products');
-            $table->foreignId('store_id')->constrained('stores');
+            $table->enum('ten',['Ca 1','Ca 2','Ca 3'])->default('Ca 1');
+            $table->string('thoigianbatdau');
+            $table->string('thoigianketthuc');
             $table->timestamps();
         });
     }
@@ -29,6 +29,6 @@ return new class extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('list_products');
+        Schema::dropIfExists('schedules');
     }
 };

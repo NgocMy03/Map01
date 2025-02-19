@@ -15,8 +15,8 @@ return new class extends Migration
     {
         Schema::create('history_of_purchases', function (Blueprint $table) {
             $table->id();
-
-            $table->foreignId('inventory_id')->constrained('invetories');
+            $table->integer('soluong');
+            $table->foreignId('customer_id')->constrained('customers');
             $table->foreignId('product_id')->constrained('products');
             $table->timestamps();
         });
