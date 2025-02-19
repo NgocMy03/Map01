@@ -10,12 +10,12 @@ class StoreController extends Controller
     public function MapRealLife()
     {
         $stores = Store::all(); //Select * from store
-        return view('index', compact('stores'));
+        return view('map_real_life', compact('stores'));
     }
 
     public function MapAnimation()
     {
         $stores = Store::all();
-        return view('index2', compact('stores'));
+        return view('map_animation', compact('stores'));
     }
 }
