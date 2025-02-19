@@ -19,6 +19,7 @@ return new class extends Migration
             $table->string('diachi');
             $table->string('SDT',20);
             $table->string('toadoGPS', 100)->nullable();
+            $table->string('hinh', 100)->nullable();
             $table->timestamps();
         });
     }
