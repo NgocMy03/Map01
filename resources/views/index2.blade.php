@@ -40,6 +40,7 @@
     });
     @endphp
 
+
     <script>
         var map = L.map('map').setView([10.0275903, 105.7664918], 13);
         L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
@@ -49,15 +50,59 @@
 
         var locations = @json($locations);
 
+    var circleKIcon = L.icon({
+    iconUrl: '/images/CircleK.png',
+    iconSize: [32, 32],
+    iconAnchor: [16, 16],  // Điều chỉnh lại anchor point
+    popupAnchor: [0, -16]  // Điều chỉnh lại popup anchor
+});
+
+    var gs25Icon = L.icon({
+    iconUrl: '/images/GS.png',  // Đường dẫn tới icon GS25
+    iconSize: [32, 32],
+    iconAnchor: [16, 32],
+    popupAnchor: [0, -32]
+    });
+
+    var winmartIcon = L.icon({
+    iconUrl: '/images/WM.png',  // Đường dẫn tới icon Winmart
+    iconSize: [32, 32],
+    iconAnchor: [16, 32],
+    popupAnchor: [0, -32]
+    });
+
         var markers = [];
         var control = null;
 
         // Thêm marker cho mỗi địa điểm
         locations.forEach(location => {
-            var marker = L.marker(location.coords).addTo(map);
-            marker.bindPopup(location.popupContent);
-            markers.push({ marker, name: location.name, coords: location.coords });
+    // Chọn icon dựa vào tên cửa hàng
+    let customIcon;
+
+    // Thêm console.log để kiểm tra tên cửa hàng
+    console.log('Store name:', location.name);
+
+    if (location.name.toLowerCase().includes('circle k')) {
+        customIcon = circleKIcon;
+    } else if (location.name.toLowerCase().includes('gs')) {
+        customIcon = gs25Icon;
+    } else if (location.name.toLowerCase().includes('winmart')) {
+        customIcon = winmartIcon;
+    } else {
+        // Nếu không khớp với bất kỳ điều kiện nào, sử dụng marker mặc định
+        customIcon = L.icon({
+            iconUrl: 'https://unpkg.com/leaflet@1.9.4/dist/images/marker-icon.png',
+            iconSize: [25, 41],
+            iconAnchor: [12, 41],
+            popupAnchor: [0, -41]
         });
+    }
+
+    // Tạo marker với custom icon
+    var marker = L.marker(location.coords, { icon: customIcon }).addTo(map);
+    marker.bindPopup(location.popupContent);
+    markers.push({ marker, name: location.name, coords: location.coords });
+});
 
         // Gợi ý danh sách khi nhập tìm kiếm
         var searchBox = document.getElementById('search-box');
