@@ -4,10 +4,11 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\SoftDeletes;
 
 class Product extends Model
 {
-    use HasFactory;
+    use HasFactory, SoftDeletes;
     protected $fillable = [
         'ten',
         'loai',
@@ -17,4 +18,7 @@ class Product extends Model
         'discount_id',
         'deleted_at',
     ];
+    public function discount(){
+        return $this->belongsTo(Discount::class, 'discount_id', 'id');
+    }
 }

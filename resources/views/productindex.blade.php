@@ -56,27 +56,12 @@
                 <div class="filter-wrapper">
                     <div class="uk-flex uk-flex-middle uk-flex-space-between">
                         <div class="perpage">
-                            <div class="uk-flex uk-flex-middle uk-flex-space-between">
-                                {{-- <select name="perpage" class="form-control input-sm perpage filter mr10" onchange="this.form.submit()">
-                                    @for($i=20; $i<=200; $i+=20)
-                                        <option {{ ($perpage == $i) ? 'selected' : '' }} value="{{$i}}">{{$i}} bản ghi</option>
-                                    @endfor
-                                </select> --}}
-                            </div>
+                            <div class="uk-flex uk-flex-middle uk-flex-space-between"></div>
                         </div>
                         <div class="action">
                             <div class="uk-flex uk-flex-middle">
-                                <select name="user_catalogue_id" class="form-control mr10">
-                                    <option value="0" selected="selected">Chọn loại sản phẩm</option>
-                                    {{-- <option value="1">Khách hàng thường</option>
-                                    <option value="2">Khách VIP</option> --}}
-                                </select>
                                 <div class="uk-search uk-flex uk-flex-middle mr10">
                                     <div class="input-group">
-                                        <input type="text" name="keyword" value="{{ request('keyword') ?: old('keyword') }}" placeholder="Nhập để tìm kiếm..." class="form-control">
-                                        <span class="input-group-btn">
-                                            <button type="submit" name="search" value="search" class="btn btn-primary mb0 btn-sm">Tìm kiếm</button>
-                                        </span>
                                     </div>
                                 </div>
                                 <a href="{{route('product.create')}}" class="btn btn-danger"><i class="fa fa-plus mr5"></i>Thêm mới sản phẩm</a>
@@ -88,9 +73,6 @@
                 <table class="table table-striped table-bordered">
                     <thead>
                     <tr>
-                        {{-- <th>
-                            <input type="checkbox" value="" id="checkAll" class="input-checkbox">
-                        </th> --}}
                         <th style="width: 90px;">Hình ảnh</th>
                         <th>Tên sản phẩm</th>
                         <th>Loại sản phẩm</th>
@@ -104,19 +86,16 @@
                     @if( isset($product) && $product->isNotEmpty())
                         @foreach($product as $prod)
                         <tr>
-                            {{-- <td>
-                                <input type="checkbox" value="" class="input-checkbox checkboxItem">
-                            </td> --}}
                             <td>
                                 <span class="image image-cover">
-                                    <img src="{{$prod -> hinhanh}}" alt="avt">
+                                    <img src="{{$prod->hinhanh}}" alt="avt">
                                 </span>
                             </td>
-                            <td>{{$prod -> ten}}</td>
-                            <td>{{$prod -> loai}}</td>
-                            <td>{{$prod -> gia}}</td>
-                            <td>{{$prod -> soluonton}}</td>
-                            <td>{{$prod -> discount_id}}</td>
+                            <td>{{$prod->ten}}</td>
+                            <td>{{$prod->loai}}</td>
+                            <td>{{$prod->gia}}</td>
+                            <td>{{$prod->soluongton}}</td>
+                            <td>{{$prod->discount->chuongtrinhKM}}</td>
 
                             <td class="text-center">
                                 <a href="{{route('product.edit', $prod->id)}}" class="btn btn-success"><i class="fa fa-edit"></i></a>
@@ -127,7 +106,7 @@
                     @endif
                     </tbody>
                 </table>
-                {{-- {{$product -> links('pagination::bootstrap-4')}} --}}
+                {{$product -> links('pagination::bootstrap-4')}}
             </div>
         </div>
     </div>

@@ -16,10 +16,6 @@ class ProductService{
     ){
         $this->productRepo = $productRepo;
     }
-    public function paginate(){
-        $products = Product::paginate(15);
-        return $products;
-    }
 
     public function create($request){
         DB::beginTransaction();
@@ -60,3 +56,7 @@ class ProductService{
         }
     }
 }
+
+
+
+
