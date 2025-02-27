@@ -73,30 +73,64 @@
         }).addTo(map);
 
         var locations = @json($locations);
+        var circleKIcon = L.icon({
+            iconUrl: 'assets/img/stores/CircleK.png',
+            iconSize: [32, 32],
+            iconAnchor: [16, 16], // Điều chỉnh lại anchor point
+            popupAnchor: [0, -16] // Điều chỉnh lại popup anchor
+        });
+
+        var gs25Icon = L.icon({
+            iconUrl: 'assets/img/stores/GS.png', // Đường dẫn tới icon GS25
+            iconSize: [32, 32],
+            iconAnchor: [16, 32],
+            popupAnchor: [0, -32]
+        });
+
+        var winmartIcon = L.icon({
+            iconUrl: 'assets/img/stores/WM.png', // Đường dẫn tới icon Winmart
+            iconSize: [32, 32],
+            iconAnchor: [16, 32],
+            popupAnchor: [0, -32]
+        });
 
         var markers = [];
         var control = null;
 
-        // Thêm marker cho mỗi địa điểm
         locations.forEach(location => {
-            var customIcon = L.icon({
-                iconUrl: location.icon, // Đường dẫn icon từ PHP
-                iconSize: [32, 32], // Kích thước icon (có thể thay đổi)
-                iconAnchor: [16, 32], // Điểm neo của icon (tâm icon so với vị trí marker)
-                popupAnchor: [0, -32] // Điểm neo của popup khi mở
-            });
+    let currentIcon;
 
-            var marker = L.marker(location.coords, {
-                icon: customIcon
-            }).addTo(map);
-            marker.bindPopup(location.popupContent);
+    // Debug: In ra tên cửa hàng để kiểm tra
+    console.log("Store name:", location.name);
 
-            markers.push({
-                marker,
-                name: location.name,
-                coords: location.coords
-            });
+    // Kiểm tra theo tên cửa hàng
+    if (location.name.includes('CircleK') || location.name.includes('Circle K')) {
+        currentIcon = circleKIcon;
+    } else if (location.name.includes('GS25') || location.name.includes('GS')) {
+        currentIcon = gs25Icon;
+    } else if (location.name.includes('WinMart') || location.name.includes('WM')) {
+        currentIcon = winmartIcon;
+    } else {
+        currentIcon = L.icon({
+            iconUrl: location.icon,
+            iconSize: [32, 32],
+            iconAnchor: [16, 32],
+            popupAnchor: [0, -32]
         });
+    }
+
+    var marker = L.marker(location.coords, {
+        icon: currentIcon
+    }).addTo(map);
+
+    marker.bindPopup(location.popupContent);
+
+    markers.push({
+        marker,
+        name: location.name,
+        coords: location.coords
+    });
+});
 
 
         // Gợi ý danh sách khi nhập tìm kiếm
@@ -115,7 +149,6 @@
                             map.setView(location.coords, 15);
                             L.popup().setLatLng(location.coords).setContent(location.popupContent)
                                 .openOn(map);
-                            getUserLocationAndRoute(location.coords);
                             suggestions.innerHTML = "";
                         });
                         suggestions.appendChild(li);

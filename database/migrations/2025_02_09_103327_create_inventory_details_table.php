@@ -15,6 +15,10 @@ return new class extends Migration
     {
         Schema::create('inventory_details', function (Blueprint $table) {
             $table->id();
+            $table->integer('soluongcungcap');
+            $table->decimal('dongia');
+            $table->foreignId('inventory_id')->constrained('inventories');
+            $table->foreignId('product_id')->constrained('products');
             $table->timestamps();
         });
     }

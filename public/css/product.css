@@ -1,0 +1,88 @@
+/* General Styles */
+body {
+    font-family: 'Lato', sans-serif;
+    background-color: #f8f9fa; /* Light background for contrast */
+}
+
+/* Navigation Styles */
+.navbar {
+    background-color: #6c757d; /* Secondary color */
+}
+
+.nav-link {
+    color: #ffffff; /* White text for links */
+}
+
+.nav-link:hover {
+    color: #ffc107; /* Gold color on hover */
+}
+
+/* Header Styles */
+.masthead {
+    padding: 100px 0; /* Space for the header */
+    background: linear-gradient(180deg, rgba(0, 123, 255, 0.7) 0%, rgba(0, 123, 255, 0.5) 100%), url('assets/img/header-bg.jpg') no-repeat center center; /* Background image */
+    background-size: cover; /* Cover the entire area */
+}
+
+.masthead-heading {
+    font-size: 2.5rem; /* Larger font size for the heading */
+}
+
+.masthead-subheading {
+    font-size: 1.25rem; /* Subheading size */
+}
+
+/* Store Section Styles */
+.store {
+    padding: 60px 0; /* Space for the store section */
+}
+
+.store-item {
+    transition: transform 0.3s; /* Smooth scaling effect */
+}
+
+.store-item:hover {
+    transform: scale(1.05); /* Scale up on hover */
+}
+
+.store-item-title {
+    margin-top: 10px; /* Space between image and title */
+    font-weight: bold; /* Bold title */
+}
+
+/* Footer Styles */
+.footer {
+    background-color: #343a40; /* Dark background for footer */
+    color: #ffffff; /* White text */
+    padding: 20px 0; /* Padding for footer */
+}
+
+.footer h4 {
+    margin-bottom: 15px; /* Space below heading */
+}
+
+.footer a {
+    color: #ffffff; /* White color for social icons */
+}
+
+.footer a:hover {
+    color: #ffc107; /* Gold color on hover */
+}
+
+/* Copyright Section */
+.copyright {
+    background-color: #212529; /* Darker background for copyright */
+    color: #ffffff; /* White text */
+    padding: 10px 0; /* Padding for copyright */
+}
+
+/* Responsive Styles */
+@media (max-width: 768px) {
+    .masthead-heading {
+        font-size: 2rem; /* Smaller heading on mobile */
+    }
+
+    .masthead-subheading {
+        font-size: 1rem; /* Smaller subheading on mobile */
+    }
+}

@@ -15,6 +15,9 @@ return new class extends Migration
     {
         Schema::create('list_products', function (Blueprint $table) {
             $table->id();
+            $table->integer('soluong');
+            $table->foreignId('product_id')->constrained('products');
+            $table->foreignId('store_id')->constrained('stores');
             $table->timestamps();
         });
     }

@@ -15,6 +15,12 @@ return new class extends Migration
     {
         Schema::create('staff', function (Blueprint $table) {
             $table->id();
+            $table->string('ten');
+            $table->tinyInteger('gioitinh');
+            $table->date('namsinh');
+            $table->enum('chucvu',['Nhân viên bán hàng','Thu ngân','Quản lý cửa hàng'])->default('Nhân viên bán hàng');
+            $table->float('thoigianlamviec');
+            $table->foreignId('store_id')->constrained('stores');
             $table->timestamps();
         });
     }
