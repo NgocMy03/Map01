@@ -16,7 +16,8 @@ return new class extends Migration
         Schema::create('discounts', function (Blueprint $table) {
             $table->id();
             $table->string('chuongtrinhKM');
-            $table->date('thoigianapdung');
+            $table->date('thoigianbatdau');
+            $table->date('thoigianketthuc');
 
             $table->enum('mucgiamgia',['phantram','quatang'])->default('phantram');
             $table->timestamps();

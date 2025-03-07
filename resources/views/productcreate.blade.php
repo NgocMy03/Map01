@@ -100,7 +100,10 @@
                                 <div class="col-lg-6">
                                     <div class="form-row">
                                         <label for="" class="control-label text-left">Ảnh sản phẩm</label>
-                                        <input type="text" name="hinhanh" value="{{old('hinhanh', ($product->hinhanh) ?? '')}}" class="form-control" placeholder="" autocomplete="off">
+                                        <input type="file" name="hinhanh" class="form-control" accept="image/*">
+                                        @if(isset($product) && $product->hinhanh)
+                                            <small class="form-text text-muted">Ảnh hiện tại: {{$product->hinhanh}}</small>
+                                        @endif
                                     </div>
                                 </div>
                             </div>

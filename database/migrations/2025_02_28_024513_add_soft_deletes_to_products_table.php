@@ -12,15 +12,11 @@ return new class extends Migration
      * @return void
      */
     public function up()
-    {
-        Schema::table('products', function (Blueprint $table) {
-            if (!Schema::hasColumn('products', 'hinhanh')) {
-                $table->string('hinhanh', 255)->nullable();
-            } else {
-                $table->string('hinhanh', 255)->nullable()->change();
-            }
-        });
-    }
+{
+    Schema::table('products', function (Blueprint $table) {
+        $table->softDeletes();
+    });
+}
 
     /**
      * Reverse the migrations.
@@ -30,7 +26,7 @@ return new class extends Migration
     public function down()
     {
         Schema::table('products', function (Blueprint $table) {
-            $table->string('hinhanh', 255)->nullable(false)->change();
+            //
         });
     }
 };
