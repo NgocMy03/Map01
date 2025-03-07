@@ -19,7 +19,7 @@ return new class extends Migration
             $table->string('loai');
             $table->decimal('gia', 10,2);
             $table->integer('soluongton');
-            $table->string('hinhanh');
+            $table->string('hinhanh')->nullable();
             $table->foreignId('discount_id')->constrained('discounts');
             $table->timestamp('deleted_at')->nullable();
             $table->timestamps();
