@@ -16,18 +16,47 @@
 
     <!-- Bootstrap -->
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/css/bootstrap.min.css">
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/js/bootstrap.bundle.min.js"></script>
-
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
     <!-- Font Awesome -->
     <script src="https://use.fontawesome.com/releases/v6.3.0/js/all.js" crossorigin="anonymous"></script>
 
     <!-- CSS cho Map Animation -->
     <link rel="stylesheet" href="{{ asset('css/map_animation.css') }}">
+
+
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.css">
+
+
     </link>
 </head>
 
 <style>
+    .swiper-slide {
+        display: flex;
+        justify-content: center;
+    }
 
+    .swiper-button-next:after {
+        font-size: 16px;
+    }
+
+
+    .swiper-button-prev:after {
+        font-size: 16px;
+    }
+
+
+    .star-rating input { display: none; }
+        .star-rating label {
+            font-size: 2rem;
+            color: gray;
+            cursor: pointer;
+        }
+        .star-rating input:checked ~ label,
+        .star-rating label:hover,
+        .star-rating label:hover ~ label {
+            color: gold;
+        }
 </style>
 
 <body>
@@ -57,9 +86,80 @@
                                 <h3>{$store->ten}</h3>
                                 <p>{$store->diachi}</p>
                                 <p>SĐT: {$store->SDT}</p>
-                                <button class=\"btn btn-primary btn-routing-move\" onclick=\"getUserLocationAndRoute([{$store->toadoGPS}])\">
-                                    <i class=\"fa-solid fa-car pe-2\"></i>Đường đi
-                                </button>",
+                                <div class=\"container my-2\">
+                                    <div class=\"swiper mySwiper\">
+                                        <div class=\"swiper-wrapper\">
+                                            <div class=\"swiper-slide\">
+                                                <div class=\"card\" style=\"width: 100%;\">
+                                                    <div class=\"row p-4 g-0 align-items-center\">
+                                                        <!-- Hình ảnh bên trái -->
+                                                        <div class=\"col-4 d-flex justify-content-center\">
+                                                            <img src=\"assets/img/product/bpt.png\" alt=\"Product 1\" class=\"img-fluid\" width=\"150\">
+                                                        </div>
+                                                        <!-- Nội dung bên phải -->
+                                                        <div class=\"col-8\">
+                                                            <div class=\"card-body\">
+                                                                <h5 class=\"card-title\">Sản phẩm 1</h5>
+                                                                <p class=\"card-text\">Mô tả sản phẩm 1</p>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                   <button class=\"btn btn-success mb-2 w-50 d-flex m-auto justify-content-center\">So sánh giá</button>
+                                                </div>
+                                            </div>
+
+                                            <div class=\"swiper-slide\">
+                                                <div class=\"card\" style=\"width: 100%;\">
+                                                    <div class=\"row p-4 g-0 align-items-center\">
+                                                        <div class=\"col-4 d-flex justify-content-center\">
+                                                            <img src=\"assets/img/product/bpt.png\" alt=\"Product 2\" class=\"img-fluid\" width=\"150\">
+                                                        </div>
+                                                        <div class=\"col-8\">
+                                                            <div class=\"card-body\">
+                                                                <h5 class=\"card-title\">Sản phẩm 2</h5>
+                                                                <p class=\"card-text\">Mô tả sản phẩm 2</p>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                    <button class=\"btn btn-success mb-2 w-50 d-flex m-auto justify-content-center\">So sánh giá</button>
+                                                </div>
+                                            </div>
+
+                                            <div class=\"swiper-slide\">
+                                                <div class=\"card\" style=\"width: 100%;\">
+                                                    <div class=\"row p-4 g-0 align-items-center\">
+                                                        <div class=\"col-4 d-flex justify-content-center\">
+                                                            <img src=\"assets/img/product/bpt.png\" alt=\"Product 3\" class=\"img-fluid\" width=\"150\">
+                                                        </div>
+                                                        <div class=\"col-8\">
+                                                            <div class=\"card-body\">
+                                                                <h5 class=\"card-title\">Sản phẩm 3</h5>
+                                                                <p class=\"card-text\">Mô tả sản phẩm 3</p>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                     <button class=\"btn btn-success mb-2 w-50 d-flex m-auto justify-content-center\">So sánh giá</button>
+                                                </div>
+                                            </div>
+                                        </div>
+
+                                        <!-- Nút điều hướng -->
+                                        <div class=\"swiper-button-next\"></div>
+                                        <div class=\"swiper-button-prev\"></div>
+
+                                     
+                                    </div>
+                                </div>
+
+                                <div class=\"d-flex justify-content-between align-content-center\">
+                                    <button class=\"btn btn-primary btn-routing-move\" onclick=\"getUserLocationAndRoute([{$store->toadoGPS}])\">
+                                        <i class=\"fa-solid fa-car pe-2\"></i>Đường đi
+                                    </button>
+                                    <button type=\"button\" class=\"btn btn-secondary\" data-bs-toggle=\"offcanvas\" data-bs-target=\"#ratingOffcanvas\">
+                                         <i class=\"fa-solid fa-comment pe-2\"></i>Đánh giá
+                                    </button>
+                                </div>"
+                            ,
                 'icon' => "assets/img/stores/{$store->hinh}",
             ];
         });
@@ -98,39 +198,39 @@
         var control = null;
 
         locations.forEach(location => {
-    let currentIcon;
+            let currentIcon;
 
-    // Debug: In ra tên cửa hàng để kiểm tra
-    console.log("Store name:", location.name);
+            // Debug: In ra tên cửa hàng để kiểm tra
+            console.log("Store name:", location.name);
 
-    // Kiểm tra theo tên cửa hàng
-    if (location.name.includes('CircleK') || location.name.includes('Circle K')) {
-        currentIcon = circleKIcon;
-    } else if (location.name.includes('GS25') || location.name.includes('GS')) {
-        currentIcon = gs25Icon;
-    } else if (location.name.includes('WinMart') || location.name.includes('WM')) {
-        currentIcon = winmartIcon;
-    } else {
-        currentIcon = L.icon({
-            iconUrl: location.icon,
-            iconSize: [32, 32],
-            iconAnchor: [16, 32],
-            popupAnchor: [0, -32]
+            // Kiểm tra theo tên cửa hàng
+            if (location.name.includes('CircleK') || location.name.includes('Circle K')) {
+                currentIcon = circleKIcon;
+            } else if (location.name.includes('GS25') || location.name.includes('GS')) {
+                currentIcon = gs25Icon;
+            } else if (location.name.includes('WinMart') || location.name.includes('WM')) {
+                currentIcon = winmartIcon;
+            } else {
+                currentIcon = L.icon({
+                    iconUrl: location.icon,
+                    iconSize: [32, 32],
+                    iconAnchor: [16, 32],
+                    popupAnchor: [0, -32]
+                });
+            }
+
+            var marker = L.marker(location.coords, {
+                icon: currentIcon
+            }).addTo(map);
+
+            marker.bindPopup(location.popupContent);
+
+            markers.push({
+                marker,
+                name: location.name,
+                coords: location.coords
+            });
         });
-    }
-
-    var marker = L.marker(location.coords, {
-        icon: currentIcon
-    }).addTo(map);
-
-    marker.bindPopup(location.popupContent);
-
-    markers.push({
-        marker,
-        name: location.name,
-        coords: location.coords
-    });
-});
 
 
         // Gợi ý danh sách khi nhập tìm kiếm
@@ -320,6 +420,84 @@
             return R * c; // Khoảng cách giữa hai điểm, đơn vị (km)
         }
     </script>
+
+    <script src="https://cdn.jsdelivr.net/npm/swiper/swiper-bundle.min.js"></script>
+    <script>
+        map.on('popupopen', function() {
+            new Swiper(".mySwiper", {
+                slidesPerView: 1,
+                spaceBetween: 10,
+                navigation: {
+                    nextEl: ".swiper-button-next",
+                    prevEl: ".swiper-button-prev",
+                },
+                // pagination: {
+                //     el: ".swiper-pagination",
+                //     clickable: true,
+                // },
+                loop: true
+            });
+        });
+        // <!-- Dấu hiệu trang -->
+        // <div class=\"swiper-pagination\"></div>
+    </script>
+
+
+
+<!-- Offcanvas Đánh Giá -->
+<!-- Offcanvas Đánh Giá -->
+<div class="offcanvas offcanvas-end" tabindex="-1" id="ratingOffcanvas" aria-labelledby="ratingOffcanvasLabel">
+    <div class="offcanvas-header">
+        <h5 class="offcanvas-title" id="ratingOffcanvasLabel">Đánh Giá Cửa Hàng</h5>
+        <button type="button" class="btn-close" data-bs-dismiss="offcanvas"></button>
+    </div>
+    <div class="offcanvas-body">
+        <!-- Form Đánh Giá -->
+        <form id="ratingForm">
+            <div class="mb-3 text-center star-rating">
+                <input type="radio" id="star5" name="rating" value="5"><label for="star5">★</label>
+                <input type="radio" id="star4" name="rating" value="4"><label for="star4">★</label>
+                <input type="radio" id="star3" name="rating" value="3"><label for="star3">★</label>
+                <input type="radio" id="star2" name="rating" value="2"><label for="star2">★</label>
+                <input type="radio" id="star1" name="rating" value="1"><label for="star1">★</label>
+            </div>
+            <div class="mb-3">
+                <label for="comment" class="form-label">Nhận xét của bạn</label>
+                <textarea class="form-control" id="comment" rows="3" placeholder="Viết nhận xét..."></textarea>
+            </div>
+            <button type="submit" class="btn btn-success w-100">Gửi đánh giá</button>
+        </form>
+
+        <!-- Dữ liệu giả - Đánh giá gần đây -->
+        <hr>
+        <h5 class="mt-3">⭐ Đánh Giá Gần Đây</h5>
+        
+        <div id="reviewsList">
+            <div class="review-item border-bottom pb-3 mb-3">
+                <h6>Nguyễn Văn A</h6>
+                <div class="text-warning">⭐⭐⭐⭐☆ (4/5)</div>
+                <small class="text-muted">2 ngày trước</small>
+                <p>Shop phục vụ tốt, giao hàng nhanh.</p>
+            </div>
+
+            <div class="review-item border-bottom pb-3 mb-3">
+                <h6>Trần Thị B</h6>
+                <div class="text-warning">⭐⭐⭐⭐⭐ (5/5)</div>
+                <small class="text-muted">1 tuần trước</small>
+                <p>Chất lượng sản phẩm rất tốt, mình rất hài lòng.</p>
+            </div>
+
+            <div class="review-item border-bottom pb-3 mb-3">
+                <h6>Phạm Văn C</h6>
+                <div class="text-warning">⭐⭐⭐☆☆ (3/5)</div>
+                <small class="text-muted">3 tuần trước</small>
+                <p>Sản phẩm ổn, nhưng giao hàng hơi chậm.</p>
+            </div>
+        </div>
+    </div>
+</div>
+
 </body>
+
 
 </html>
