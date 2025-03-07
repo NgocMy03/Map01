@@ -56,13 +56,16 @@
     @php
         //$currentDate = date('Y-m-d');
         $discount_id = isset($product) ? $product->discount_id : old('discount_id');
+        $gia = isset($product) ? $product->listproduct->first()->gia : old('gia');
+        $soluong = isset($product) ? $product->listproduct->first()->soluong : old('soluong');
+        $store_id = isset($product) ? $product->listproduct->first()->store_id : old('store_id');
     @endphp
 
     @php
         $url = ($config['method'] == 'create') ? route('product.storeProduct') : route('product.update', $product->id);
     @endphp
 
-    <form action="{{ $url }}" method="post" class="box">
+    <form action="{{ $url }}" method="post" class="box" enctype="multipart/form-data">
         @csrf
         <div class="wrapper wrapper-content animated fadeInRight">
             <div class="row">
@@ -86,7 +89,7 @@
                                 <div class="col-lg-6">
                                     <div class="form-row">
                                         <label for="" class="control-label text-left">Giá<span class="text-danger">(*)</span></label>
-                                        <input type="text" name="gia" value="{{ old('gia', ($product->gia) ?? '')}}" class="form-control" placeholder="" autocomplete="off">
+                                        <input type="text" name="gia" value="{{ old('gia', $gia)}}" class="form-control" placeholder="" autocomplete="off">
                                     </div>
                                 </div>
                             </div>
@@ -110,8 +113,8 @@
                             <div class="row mb15">
                                 <div class="col-lg-6">
                                     <div class="form-row">
-                                        <label for="" class="control-label text-left">Số lượng tồn</label>
-                                        <input type="text" name="soluongton" value="{{old('soluongton', ($product->soluongton) ?? '')}}" class="form-control" placeholder="" autocomplete="off">
+                                        <label for="" class="control-label text-left">Số lượng</label>
+                                        <input type="text" name="soluong" value="{{old('soluong', $soluong)}}" class="form-control" placeholder="" autocomplete="off">
                                     </div>
                                 </div>
                                 <div class="col-lg-6">
@@ -122,6 +125,21 @@
                                                 @if(isset($dis))
                                                     @foreach($dis as $d)
                                                         <option {{ $discount_id == $d->id ? 'selected' : '' }} value="{{$d->id}}">{{$d->chuongtrinhKM}}</option>
+                                                    @endforeach
+                                                @endif
+                                        </select>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="row mb15">
+                                <div class="col-lg-6">
+                                    <div class="form-row">
+                                        <label for="" class="control-label text-left">Cửa hàng<span class="text-danger">(*)</span></label>
+                                        <select name="store_id" class="form-control">
+                                            <option value="0">Chọn cửa hàng</option>
+                                                @if(isset($store))
+                                                    @foreach($store as $st)
+                                                        <option {{ $store_id == $st->id ? 'selected' : '' }} value="{{$st->id}}">{{$st->ten}}</option>
                                                     @endforeach
                                                 @endif
                                         </select>

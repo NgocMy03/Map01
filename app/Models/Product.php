@@ -12,7 +12,6 @@ class Product extends Model
     protected $fillable = [
         'ten',
         'loai',
-        'gia',
         'soluongton',
         'hinhanh',
         'discount_id',
@@ -20,5 +19,8 @@ class Product extends Model
     ];
     public function discount(){
         return $this->belongsTo(Discount::class, 'discount_id', 'id');
+    }
+    public function listproduct(){
+        return $this->hasMany(ListProduct::class, 'product_id', 'id');
     }
 }

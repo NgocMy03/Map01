@@ -27,9 +27,10 @@ class UpdateProductRequest extends FormRequest
             'ten' => 'required|string',
             'loai' => 'required|string',
             'gia' => 'required|min:0',
-            'soluongton' => 'required|numeric',
-            //'hinhanh' => 'required|url',
+            'soluong' => 'required|numeric',
+            'hinhanh' => 'nullable|mimes:jpeg,png,jpg,gif|max:2048',
             'discount_id' => 'required|exists:discounts,id', // Mã giảm giá phải tồn tại trong bảng discounts
+            'store_id' => 'required|exists:stores,id',
         ];
     }
 
@@ -42,10 +43,13 @@ class UpdateProductRequest extends FormRequest
             'loai.string' => 'Loại sản phẩm phải là dạng ký tự.',
             'gia.required' => 'Bạn chưa nhập giá.',
             'gia.min' => 'Giá phải lớn hơn 0.',
-            'soluongton.required' => 'Trường "số lượng tồn" là bắt buộc.',
-            'soluongton.numeric' => 'Trường "số lượng tồn" phải là một số.',
+            'soluong.required' => 'Trường "số lượng tồn" là bắt buộc.',
+            'soluong.numeric' => 'Trường "số lượng tồn" phải là một số.',
             'discount_id.required' => 'Trường "discount_id" là bắt buộc.',
             'discount_id.exists' => 'Mã giảm giá không hợp lệ. Vui lòng chọn mã giảm giá hợp lệ từ hệ thống.',
+            'store_id.required' => 'Trường "store_id" là bắt buộc.',
+            'store_id.exists' => 'Mã cửa hàng không hợp lệ. Vui lòng chọn mã cửa hàng hợp lệ từ hệ thống.',
+
         ];
     }
 }

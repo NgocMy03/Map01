@@ -27,30 +27,19 @@
             <li class="active"><strong>Quản lý sản phẩm</strong></li>
         </ol>
     </div>
+    <div class="col-lg-1 col-lg-offset-3 p-2" style="border: 1px solid black; padding: 5px; width: 30px; font-size: 2rem; margin-top:30px;">
+        <a id="back-to-home" href="{{ route('Home') }}" title="Về trang chủ"><i class="fa fa-home"></i></a>
+    </div>
 </div>
+
+
 <div class="row mt20">
     <div class="col-lg-12">
         <div class="ibox float-e-margins">
             <div class="ibox-title">
                 <h5>Danh sách sản phẩm</h5>
-                <div class="ibox-tools">
-                    <a class="collapse-link">
-                        <i class="fa fa-chevron-up"></i>
-                    </a>
-                    <a class="dropdown-toggle" data-toggle="dropdown" href="#">
-                        <i class="fa fa-wrench"></i>
-                    </a>
-                    <ul class="dropdown-menu dropdown-user">
-                        <li><a href="#">Config option 1</a>
-                        </li>
-                        <li><a href="#">Config option 2</a>
-                        </li>
-                    </ul>
-                    <a class="close-link">
-                        <i class="fa fa-times"></i>
-                    </a>
-                </div>
             </div>
+
             <div class="ibox-content">
                 <form action="{{ route('product.index') }}" method="GET">
                 <div class="filter-wrapper">
@@ -76,9 +65,10 @@
                         <th style="width: 90px;">Hình ảnh</th>
                         <th>Tên sản phẩm</th>
                         <th>Loại sản phẩm</th>
-                        <th>Giá</th>
-                        <th>Số lượng tồn</th>
                         <th>Mã giảm giá</th>
+                        <th>Số lượng tồn</th>
+                        <th>Giá</th>
+                        <th>Cửa hàng</th>
                         <th class="text-center">Thao tác</th>
                     </tr>
                     </thead>
@@ -88,15 +78,20 @@
                         <tr>
                             <td>
                                 <span class="image image-cover">
-                                    <img src="{{$prod->hinhanh}}" alt="avt">
+                                    <img src="{{ asset('assets/img/product/' . $prod->hinhanh)}}" alt="avt">
                                 </span>
                             </td>
                             <td>{{$prod->ten}}</td>
                             <td>{{$prod->loai}}</td>
-                            <td>{{$prod->gia}}</td>
-                            <td>{{$prod->soluongton}}</td>
                             <td>{{$prod->discount->chuongtrinhKM}}</td>
-
+                            @if($prod->listproduct->isNotEmpty())
+                                @foreach($prod->listproduct as $list)
+                                    <td>{{ $list->soluong }}</td>
+                                    <td>{{ $list->gia }}</td>
+                                    <td>{{ $list->store->ten }}</td>
+                                @endforeach
+                            @endif
+                            {{-- <td>{{$prod->listproduct->store->ten}}</td> --}}
                             <td class="text-center">
                                 <a href="{{route('product.edit', $prod->id)}}" class="btn btn-success"><i class="fa fa-edit"></i></a>
                                 <a href="{{route('product.delete', $prod->id)}}" class="btn btn-danger"><i class="fa fa-trash"></i></a>
@@ -111,6 +106,13 @@
         </div>
     </div>
 </div>
+<footer>
+    <div class="footer">
+        <div class="text-center">
+            <small> &copy;Copyright: CT298 - N01</small>
+        </div>
+    </div>
+</footer>
 </body>
 </html>
 @toastifyJs

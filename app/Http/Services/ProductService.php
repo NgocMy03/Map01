@@ -4,6 +4,7 @@ namespace App\Http\Services;
 
 use App\Models\Product;
 use App\Http\Repositories\ProductRepository;
+use App\Models\ListProduct;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Hash;
@@ -20,69 +21,96 @@ class ProductService{
 
     public function create(Request $request)
     {
+        // dd($request->hinhanh);
         try {
-            $validated = $request->validate([
-                'name' => 'required|string|max:255',
-                'price' => 'required|numeric',
-                'hinhanh' => 'nullable|image|mimes:jpeg,png,jpg,gif|max:2048'
-            ]);
-
-            $data = $request->except('_token');
+            $fileName = "";
 
             // Xử lý file ảnh nếu có
             if ($request->hasFile('hinhanh')) {
-                $file = $request->file('hinhanh');
-                $fileName = time() . '_' . $file->getClientOriginalName();
-                $file->move(public_path('images/products'), $fileName);
-                $data['hinhanh'] = 'images/products/' . $fileName;
+                $fileName = $request->file('hinhanh')->getClientOriginalName();
+                $request->hinhanh->move(public_path('assets/img/product/'), $fileName);
+                $data['hinhanh'] = 'assets/img/product/' . $fileName;
             }
 
-            Product::create($data);
-            return true;
-        } catch (\Exception $err) {
-            Log::error($err->getMessage());
-            return false;
+            // Tạo sản phẩm mới
+            $product = $this->productRepo->create([
+                'ten' => $request->ten,
+                'loai' => $request->loai,
+                'hinhanh' => $fileName,
+                'discount_id' => $request->discount_id
+            ]);
+
+            // Kiểm tra nếu request có 'soluong', 'gia', 'store_id'
+            if ($request->has(['soluong', 'gia', 'store_id'])) {
+                // Tạo chi tiết cho list_products
+                $details = [
+                    'soluong' => $request->soluong,
+                    'gia' => $request->gia,
+                    'store_id' => $request->store_id,
+                    'product_id' => $product->id  // Sử dụng ID của sản phẩm vừa tạo
+                ];
+
+                // Chèn bản ghi vào bảng list_products
+                ListProduct::create($details);
+            }
+        } catch (\Exception $e) {
+            // Xử lý lỗi nếu có
+            dd($e->getMessage());
         }
+
     }
 
     public function update(Request $request, $id)
     {
         try {
             $product = Product::find($id);
-            if (!$product) {
-                Log::error("Product with ID $id not found");
-                return false;
-            }
-
-            $validated = $request->validate([
-                'name' => 'required|string|max:255',
-                'price' => 'required|numeric',
-                'hinhanh' => 'nullable|image|mimes:jpeg,png,jpg,gif|max:2048'
-            ]);
-
-            $data = $request->except('_token');
+            $fileName = "";
 
             // Xử lý file ảnh nếu có
             if ($request->hasFile('hinhanh')) {
-                // Xóa ảnh cũ nếu tồn tại
-                if ($product->hinhanh && file_exists(public_path($product->hinhanh))) {
-                    try {
-                        unlink(public_path($product->hinhanh));
-                    } catch (\Exception $e) {
-                        Log::error("Error deleting old image: " . $e->getMessage());
-                    }
-                }
+                $fileName = $request->file('hinhanh')->getClientOriginalName();
+                $request->hinhanh->move(public_path('assets/img/product/'), $fileName);
+                $data['hinhanh'] = 'assets/img/product/' . $fileName;
+            }
+            $listProduct = ListProduct::where('product_id', $product->id)->first();
+            // Tạo sản phẩm mới
+            $product = $this->productRepo->update([
+                'ten' => $request->ten,
+                'loai' => $request->loai,
+                'hinhanh' => $fileName,
+                'discount_id' => $request->discount_id
+            ]);
 
-                $file = $request->file('hinhanh');
-                $fileName = time() . '_' . $file->getClientOriginalName();
-                $file->move(public_path('images/products'), $fileName);
-                $data['hinhanh'] = 'images/products/' . $fileName;
+            // Kiểm tra nếu request có 'soluong', 'gia', 'store_id'
+            if ($request->has(['soluong', 'gia', 'store_id'])) {
+                // Tạo chi tiết cho list_products
+                $details = [
+                    'soluong' => $request->soluong,
+                    'gia' => $request->gia,
+                    'store_id' => $request->store_id,
+                    'product_id' => $listProduct->product_id  // Sử dụng ID của sản phẩm vừa tạo
+                ];
+
+                // Chèn bản ghi vào bảng list_products
+                ListProduct::update($details);
             }
 
-            $product->update($data);
+            DB::commit();
             return true;
         } catch (\Exception $err) {
             Log::error($err->getMessage());
+            return false;
+        }
+    }
+    public function destroy($id){
+        DB::beginTransaction();
+        try{
+            $product = $this->productRepo->delete($id);
+            DB::commit();
+            return true;
+        }catch (\Exception $e){
+            DB::rollBack();
+            echo $e->getMessage();die();
             return false;
         }
     }
