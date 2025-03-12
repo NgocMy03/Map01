@@ -5,6 +5,8 @@ namespace App\Http\Controllers;
 use App\Models\Rate;
 use App\Models\Store;
 use Illuminate\Http\Request;
+use App\Models\ListProduct;
+use Illuminate\Support\Facades\DB;
 
 class ApiController extends Controller
 {
