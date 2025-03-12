@@ -466,123 +466,7 @@
             <button type="button" class="btn-close" data-bs-dismiss="offcanvas"></button>
         </div>
         <div class="offcanvas-body">
-            <div class="row">
-                <!-- Cột trái: Hình ảnh sản phẩm + thông tin -->
-                <div class="col-md-5 border-end pe-3">
-                    <div class="text-center">
-                        <img src="assets/img/product/bpt.png" class="img-fluid rounded shadow-sm" alt="Sản phẩm">
-                    </div>
-                    <h3>Tên cửa hàng</h3>
-                    <h4 class="fw-bold mt-3">Tên Sản Phẩm</h4>
-                    <p class="text-danger fs-4 fw-bold">💰 1.500.000đ</p>
-                    <p class="text-muted">📌 Mô tả ngắn gọn về sản phẩm...</p>
-                </div>
-
-                <!-- Cột phải: Danh sách cửa hàng -->
-                <div class="col-md-7">
-                    <h5 class="mb-3 fw-bold">📍 Danh Sách Cửa Hàng</h5>
-                    <div class="store-list">
-                        <div class="card mb-3 shadow-sm">
-                            <div class="row g-0">
-                                <div class="col-md-3 d-flex align-items-center">
-                                    <img src="assets/img/product/bpt.png" class="img-fluid rounded-start"
-                                        alt="Sản phẩm">
-                                </div>
-                                <div class="col-md-9">
-                                    <div class="card-body">
-                                        <h6 class="fw-bold">Shop A</h6>
-                                        <h4 class="fw-bold mt-3">Tên Sản Phẩm</h4>
-                                        <p class="text-danger fw-bold fs-5">1.450.000đ</p>
-                                        <button class="btn btn-sm btn-primary w-100">🛒 Đến Ngay</button>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-
-                        <div class="card mb-3 shadow-sm">
-                            <div class="row g-0">
-                                <div class="col-md-3 d-flex align-items-center">
-                                    <img src="assets/img/product/bpt.png" class="img-fluid rounded-start"
-                                        alt="Sản phẩm">
-                                </div>
-                                <div class="col-md-9">
-                                    <div class="card-body">
-                                        <h6 class="fw-bold">Shop B</h6>
-                                        <h4 class="fw-bold mt-3">Tên Sản Phẩm</h4>
-                                        <p class="text-danger fw-bold fs-5">1.480.000đ</p>
-                                        <button class="btn btn-sm btn-primary w-100">🛒 Đến Ngay</button>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-
-                        <div class="card mb-3 shadow-sm">
-                            <div class="row g-0">
-                                <div class="col-md-3 d-flex align-items-center">
-                                    <img src="assets/img/product/bpt.png" class="img-fluid rounded-start"
-                                        alt="Sản phẩm">
-                                </div>
-                                <div class="col-md-9">
-                                    <div class="card-body">
-                                        <h6 class="fw-bold">Shop C</h6>
-                                        <h4 class="fw-bold mt-3">Tên Sản Phẩm</h4>
-                                        <p class="text-danger fw-bold fs-5">1.500.000đ</p>
-                                        <button class="btn btn-sm btn-primary w-100">🛒 Đến Ngay</button>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="card mb-3 shadow-sm">
-                            <div class="row g-0">
-                                <div class="col-md-3 d-flex align-items-center">
-                                    <img src="assets/img/product/bpt.png" class="img-fluid rounded-start"
-                                        alt="Sản phẩm">
-                                </div>
-                                <div class="col-md-9">
-                                    <div class="card-body">
-                                        <h6 class="fw-bold">Shop C</h6>
-                                        <h4 class="fw-bold mt-3">Tên Sản Phẩm</h4>
-                                        <p class="text-danger fw-bold fs-5">1.500.000đ</p>
-                                        <button class="btn btn-sm btn-primary w-100">🛒 Đến Ngay</button>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="card mb-3 shadow-sm">
-                            <div class="row g-0">
-                                <div class="col-md-3 d-flex align-items-center">
-                                    <img src="assets/img/product/bpt.png" class="img-fluid rounded-start"
-                                        alt="Sản phẩm">
-                                </div>
-                                <div class="col-md-9">
-                                    <div class="card-body">
-                                        <h6 class="fw-bold">Shop C</h6>
-                                        <h4 class="fw-bold mt-3">Tên Sản Phẩm</h4>
-                                        <p class="text-danger fw-bold fs-5">1.500.000đ</p>
-                                        <button class="btn btn-sm btn-primary w-100">🛒 Đến Ngay</button>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="card mb-3 shadow-sm">
-                            <div class="row g-0">
-                                <div class="col-md-3 d-flex align-items-center">
-                                    <img src="assets/img/product/bpt.png" class="img-fluid rounded-start"
-                                        alt="Sản phẩm">
-                                </div>
-                                <div class="col-md-9">
-                                    <div class="card-body">
-                                        <h6 class="fw-bold">Shop C</h6>
-                                        <h4 class="fw-bold mt-3">Tên Sản Phẩm</h4>
-                                        <p class="text-danger fw-bold fs-5">1.500.000đ</p>
-                                        <button class="btn btn-sm btn-primary w-100">🛒 Đến Ngay</button>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-
-                    </div>
-                </div>
+            <div class="row container-compare-product">
             </div>
         </div>
     </div>
@@ -679,6 +563,55 @@
             document.querySelectorAll(".offcanvas-backdrop").forEach(el => el.remove());
             document.body.classList.remove("offcanvas-open"); // Đảm bảo trang không bị khóa cuộn
         });
+    </script>
+    <script>
+        compareProductPrice = (product_id, store_id) => {
+            console.log(product_id);
+            fetch('/api/compare-product-price/' + product_id + "/" + store_id)
+                .then(response => response.json())
+                .then(data => {
+                    console.log(data);
+
+                    document.querySelector(".container-compare-product").innerHTML = "";
+                    document.querySelector(".container-compare-product").innerHTML += `
+                            <div class="col-md-5 border-end pe-3">
+                                    <div class="text-center">
+                                        <img src="assets/img/product/${data[0].hinhanh}" class="img-fluid rounded shadow-sm" alt="Sản phẩm">
+                                    </div>
+                                    <h3>${data[0].store_name}</h3>
+                                    <h4 class="fw-bold mt-3">${data[0].ten}</h4>
+                                    <p class="text-danger fs-4 fw-bold">💰 ${Intl.NumberFormat('vi-VN').format(data[0].gia*1000)}đ</p>
+                                    <p class="text-muted">📌 Mô tả ngắn gön về sản phẩm...</p>
+                            </div>
+                            <div class="col-md-7 list-product">
+                            </div>
+                        `
+                    let col7 = document.querySelector(".list-product");
+                    for (let i = 1; i < data.length; i++) {
+                        let col7_content = document.createElement("div");
+                        col7_content.classList.add("store-list");
+                        col7_content.innerHTML = `
+                                        <div class="card mb-3 shadow-sm">
+                                            <div class="row g-0">
+                                                <div class="col-md-3 d-flex align-items-center">
+                                                    <img src="assets/img/product/${data[i].hinhanh}" class="img-fluid rounded-start"
+                                                        alt="Sản phẩm">
+                                                </div>
+                                                <div class="col-md-9">
+                                                    <div class="card-body">
+                                                        <h6 class="fw-bold">${data[i].store_name}</h6>
+                                                        <h4 class="fw-bold mt-3">${data[i].ten}</h4>
+                                                        <p class="text-danger fw-bold fs-5">${Intl.NumberFormat('vi-VN').format(data[i].gia*1000)}đ</p>
+                                                        <button class="btn btn-sm btn-primary w-100">🛒 Đến Ngay</button>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>`
+                        col7.append(col7_content);
+                    }
+                    // console.log(col7);
+                });
+        }
     </script>
 </body>
 
