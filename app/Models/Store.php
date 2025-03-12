@@ -19,10 +19,7 @@ class Store extends Model
     public function listproduct(){
         return $this->hasMany(ListProduct::class);
     }
-
-    public function rates(){
-        return $this->hasMany(Rate::class, 'store_id', 'id');
+    public function staff(){
+        return $this->hasMany(Staff::class, 'store_id', 'id');
     }
-
-
 }
