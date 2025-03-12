@@ -86,7 +86,7 @@
                             <td>{{$prod->discount->chuongtrinhKM}}</td>
                             @if($prod->listproduct->isNotEmpty())
                                 @foreach($prod->listproduct as $list)
-                                    <td>{{ $list->soluong }}</td>
+                                <td class="stock-warning" data-stock="{{ $list->soluong }}" data-min-stock="10">{{ $list->soluong }}</td>
                                     <td>{{ $list->gia }}</td>
                                     <td>{{ $list->store->ten }}</td>
                                 @endforeach
@@ -116,3 +116,17 @@
 </body>
 </html>
 @toastifyJs
+
+<script>
+    document.addEventListener("DOMContentLoaded", function () {
+        document.querySelectorAll(".stock-warning").forEach(function (element) {
+            let stock = parseInt(element.dataset.stock);
+            let minStock = parseInt(element.dataset.minStock);
+
+            if (stock <= minStock) {
+                element.classList.add("text-danger", "font-weight-bold");
+                element.innerHTML += " <i class='fa fa-exclamation-triangle'></i>";
+            }
+        });
+    });
+</script>
