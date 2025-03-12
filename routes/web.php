@@ -2,6 +2,7 @@
 
 use App\Http\Controllers\HomeController;
 use App\Http\Controllers\ProductController;
+use App\Http\Controllers\RateController;
 use App\Http\Controllers\StoreController;
 use Illuminate\Support\Facades\Route;
 
@@ -26,3 +27,6 @@ Route::get('product/{id}/delete', [ProductController::class, 'deleteProduct'])->
 Route::post('product/storeProduct', [ProductController::class, 'storeProduct'])->name('product.storeProduct');
 Route::post('product/{id}/update', [ProductController::class, 'updateProduct'])->where(['id' => '[0-9]+'])->name('product.update');
 Route::post('product/{id}/destroy', [ProductController::class, 'destroyProduct'])->where(['id' => '[0-9]+'])->name('product.destroy');
+
+Route::post('/rate-store', [RateController::class, 'store'])->name('rate.store');
+Route::get('/reviews/{id}', [RateController::class, 'getReviews'])->name('rate.getReviews');

@@ -23,9 +23,7 @@
     <!-- CSS cho Map Animation -->
     <link rel="stylesheet" href="{{ asset('css/map_animation.css') }}">
 
-
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.css">
-
 
     </link>
 </head>
@@ -46,23 +44,28 @@
     }
 
 
-    .star-rating input { display: none; }
-        .star-rating label {
-            font-size: 2rem;
-            color: gray;
-            cursor: pointer;
-        }
-        .star-rating input:checked ~ label,
-        .star-rating label:hover,
-        .star-rating label:hover ~ label {
-            color: gold;
-        }
+    .star-rating input {
+        display: none;
+    }
 
-        #compareProductPrice {
-            width: 70% !important; /* Tăng kích thước lên 70% */
-            max-width: 600px; /* Giới hạn tối đa 900px */
-}
+    .star-rating label {
+        font-size: 2rem;
+        color: gray;
+        cursor: pointer;
+    }
 
+    .star-rating input:checked~label,
+    .star-rating label:hover,
+    .star-rating label:hover~label {
+        color: gold;
+    }
+
+    #compareProductPrice {
+        width: 70% !important;
+        /* Tăng kích thước lên 70% */
+        max-width: 600px;
+        /* Giới hạn tối đa 900px */
+    }
 </style>
 
 <body>
@@ -153,7 +156,7 @@
                                         <div class=\"swiper-button-next\"></div>
                                         <div class=\"swiper-button-prev\"></div>
 
-                                     
+
                                     </div>
                                 </div>
 
@@ -161,11 +164,10 @@
                                     <button class=\"btn btn-primary btn-routing-move\" onclick=\"getUserLocationAndRoute([{$store->toadoGPS}])\">
                                         <i class=\"fa-solid fa-car pe-2\"></i>Đường đi
                                     </button>
-                                    <button type=\"button\" class=\"btn btn-secondary\" data-bs-toggle=\"offcanvas\" data-bs-target=\"#ratingOffcanvas\">
+                                    <button type=\"button\" class=\"btn btn-secondary\" onclick=\"openSubmitOffcanvas({$store->id})\" data-bs-toggle=\"offcanvas\" data-bs-target=\"#ratingOffcanvas\">
                                          <i class=\"fa-solid fa-comment pe-2\"></i>Đánh giá
                                     </button>
-                                </div>"
-                            ,
+                                </div>",
                 'icon' => "assets/img/stores/{$store->hinh}",
             ];
         });
@@ -324,8 +326,6 @@
         });
     </script>
 
-
-
     <script>
         document.getElementById("nearest-store-btn").addEventListener("click", function() {
             if (navigator.geolocation) {
@@ -448,183 +448,260 @@
         // <div class=\"swiper-pagination\"></div>
     </script>
 
+    <!-- Offcanvas Đánh Giá -->
+    <div class="offcanvas offcanvas-end" tabindex="-1" id="ratingOffcanvas" aria-labelledby="ratingOffcanvasLabel">
+        <div class="offcanvas-header">
+            <h5 class="offcanvas-title" id="ratingOffcanvasLabel">Đánh Giá Cửa Hàng</h5>
+            <button type="button" class="btn-close" data-bs-dismiss="offcanvas"></button>
+        </div>
+        <div class="offcanvas-body">
+            <!-- Form Đánh Giá -->
+            <form id="ratingForm" action="{{ route('rate.store') }}" method="post">
+                @csrf
+                <input type="hidden" name="store_id" id="store_id">
+                <div class="mb-3 text-center star-rating">
+                    <input type="radio" id="star5" name="rating" value="5"><label for="star5">★</label>
+                    <input type="radio" id="star4" name="rating" value="4"><label for="star4">★</label>
+                    <input type="radio" id="star3" name="rating" value="3"><label for="star3">★</label>
+                    <input type="radio" id="star2" name="rating" value="2"><label for="star2">★</label>
+                    <input type="radio" id="star1" name="rating" value="1"><label for="star1">★</label>
+                </div>
+                <div class="mb-3">
+                    <label for="comment" class="form-label">Nhận xét của bạn</label>
+                    <textarea class="form-control" name="comment" id="comment" rows="3" placeholder="Viết nhận xét..."></textarea>
+                </div>
+                <input type="submit" class="btn btn-success w-100" value="Gửi đánh giá">
+            </form>
 
+            <!-- Dữ liệu giả - Đánh giá gần đây -->
+            <hr>
+            <h5 class="mt-3">⭐ Đánh Giá Gần Đây</h5>
 
-<!-- Offcanvas Đánh Giá -->
-<div class="offcanvas offcanvas-end" tabindex="-1" id="ratingOffcanvas" aria-labelledby="ratingOffcanvasLabel">
-    <div class="offcanvas-header">
-        <h5 class="offcanvas-title" id="ratingOffcanvasLabel">Đánh Giá Cửa Hàng</h5>
-        <button type="button" class="btn-close" data-bs-dismiss="offcanvas"></button>
+            <div id="reviewsList"></div>
+        </div>
     </div>
-    <div class="offcanvas-body">
-        <!-- Form Đánh Giá -->
-        <form id="ratingForm">
-            <div class="mb-3 text-center star-rating">
-                <input type="radio" id="star5" name="rating" value="5"><label for="star5">★</label>
-                <input type="radio" id="star4" name="rating" value="4"><label for="star4">★</label>
-                <input type="radio" id="star3" name="rating" value="3"><label for="star3">★</label>
-                <input type="radio" id="star2" name="rating" value="2"><label for="star2">★</label>
-                <input type="radio" id="star1" name="rating" value="1"><label for="star1">★</label>
-            </div>
-            <div class="mb-3">
-                <label for="comment" class="form-label">Nhận xét của bạn</label>
-                <textarea class="form-control" id="comment" rows="3" placeholder="Viết nhận xét..."></textarea>
-            </div>
-            <button type="submit" class="btn btn-success w-100">Gửi đánh giá</button>
-        </form>
 
-        <!-- Dữ liệu giả - Đánh giá gần đây -->
-        <hr>
-        <h5 class="mt-3">⭐ Đánh Giá Gần Đây</h5>
-        
-        <div id="reviewsList">
-            <div class="review-item border-bottom pb-3 mb-3">
-                <h6>Nguyễn Văn A</h6>
-                <div class="text-warning">⭐⭐⭐⭐☆ (4/5)</div>
-                <small class="text-muted">2 ngày trước</small>
-                <p>Shop phục vụ tốt, giao hàng nhanh.</p>
-            </div>
+    <!-- Offcanvas So Sánh Giá -->
+    <div class="offcanvas offcanvas-start" tabindex="-1" id="compareProductPrice"
+        aria-labelledby="compareProductPriceLabel">
+        <div class="offcanvas-header">
+            <h5 class="offcanvas-title fw-bold" id="compareProductPriceLabel">🔍 So Sánh Giá Sản Phẩm</h5>
+            <button type="button" class="btn-close" data-bs-dismiss="offcanvas"></button>
+        </div>
+        <div class="offcanvas-body">
+            <div class="row">
+                <!-- Cột trái: Hình ảnh sản phẩm + thông tin -->
+                <div class="col-md-5 border-end pe-3">
+                    <div class="text-center">
+                        <img src="assets/img/product/bpt.png" class="img-fluid rounded shadow-sm" alt="Sản phẩm">
+                    </div>
+                    <h3>Tên cửa hàng</h3>
+                    <h4 class="fw-bold mt-3">Tên Sản Phẩm</h4>
+                    <p class="text-danger fs-4 fw-bold">💰 1.500.000đ</p>
+                    <p class="text-muted">📌 Mô tả ngắn gọn về sản phẩm...</p>
+                </div>
 
-            <div class="review-item border-bottom pb-3 mb-3">
-                <h6>Trần Thị B</h6>
-                <div class="text-warning">⭐⭐⭐⭐⭐ (5/5)</div>
-                <small class="text-muted">1 tuần trước</small>
-                <p>Chất lượng sản phẩm rất tốt, mình rất hài lòng.</p>
-            </div>
+                <!-- Cột phải: Danh sách cửa hàng -->
+                <div class="col-md-7">
+                    <h5 class="mb-3 fw-bold">📍 Danh Sách Cửa Hàng</h5>
+                    <div class="store-list">
+                        <div class="card mb-3 shadow-sm">
+                            <div class="row g-0">
+                                <div class="col-md-3 d-flex align-items-center">
+                                    <img src="assets/img/product/bpt.png" class="img-fluid rounded-start"
+                                        alt="Sản phẩm">
+                                </div>
+                                <div class="col-md-9">
+                                    <div class="card-body">
+                                        <h6 class="fw-bold">Shop A</h6>
+                                        <h4 class="fw-bold mt-3">Tên Sản Phẩm</h4>
+                                        <p class="text-danger fw-bold fs-5">1.450.000đ</p>
+                                        <button class="btn btn-sm btn-primary w-100">🛒 Đến Ngay</button>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
 
-            <div class="review-item border-bottom pb-3 mb-3">
-                <h6>Phạm Văn C</h6>
-                <div class="text-warning">⭐⭐⭐☆☆ (3/5)</div>
-                <small class="text-muted">3 tuần trước</small>
-                <p>Sản phẩm ổn, nhưng giao hàng hơi chậm.</p>
+                        <div class="card mb-3 shadow-sm">
+                            <div class="row g-0">
+                                <div class="col-md-3 d-flex align-items-center">
+                                    <img src="assets/img/product/bpt.png" class="img-fluid rounded-start"
+                                        alt="Sản phẩm">
+                                </div>
+                                <div class="col-md-9">
+                                    <div class="card-body">
+                                        <h6 class="fw-bold">Shop B</h6>
+                                        <h4 class="fw-bold mt-3">Tên Sản Phẩm</h4>
+                                        <p class="text-danger fw-bold fs-5">1.480.000đ</p>
+                                        <button class="btn btn-sm btn-primary w-100">🛒 Đến Ngay</button>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="card mb-3 shadow-sm">
+                            <div class="row g-0">
+                                <div class="col-md-3 d-flex align-items-center">
+                                    <img src="assets/img/product/bpt.png" class="img-fluid rounded-start"
+                                        alt="Sản phẩm">
+                                </div>
+                                <div class="col-md-9">
+                                    <div class="card-body">
+                                        <h6 class="fw-bold">Shop C</h6>
+                                        <h4 class="fw-bold mt-3">Tên Sản Phẩm</h4>
+                                        <p class="text-danger fw-bold fs-5">1.500.000đ</p>
+                                        <button class="btn btn-sm btn-primary w-100">🛒 Đến Ngay</button>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="card mb-3 shadow-sm">
+                            <div class="row g-0">
+                                <div class="col-md-3 d-flex align-items-center">
+                                    <img src="assets/img/product/bpt.png" class="img-fluid rounded-start"
+                                        alt="Sản phẩm">
+                                </div>
+                                <div class="col-md-9">
+                                    <div class="card-body">
+                                        <h6 class="fw-bold">Shop C</h6>
+                                        <h4 class="fw-bold mt-3">Tên Sản Phẩm</h4>
+                                        <p class="text-danger fw-bold fs-5">1.500.000đ</p>
+                                        <button class="btn btn-sm btn-primary w-100">🛒 Đến Ngay</button>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="card mb-3 shadow-sm">
+                            <div class="row g-0">
+                                <div class="col-md-3 d-flex align-items-center">
+                                    <img src="assets/img/product/bpt.png" class="img-fluid rounded-start"
+                                        alt="Sản phẩm">
+                                </div>
+                                <div class="col-md-9">
+                                    <div class="card-body">
+                                        <h6 class="fw-bold">Shop C</h6>
+                                        <h4 class="fw-bold mt-3">Tên Sản Phẩm</h4>
+                                        <p class="text-danger fw-bold fs-5">1.500.000đ</p>
+                                        <button class="btn btn-sm btn-primary w-100">🛒 Đến Ngay</button>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="card mb-3 shadow-sm">
+                            <div class="row g-0">
+                                <div class="col-md-3 d-flex align-items-center">
+                                    <img src="assets/img/product/bpt.png" class="img-fluid rounded-start"
+                                        alt="Sản phẩm">
+                                </div>
+                                <div class="col-md-9">
+                                    <div class="card-body">
+                                        <h6 class="fw-bold">Shop C</h6>
+                                        <h4 class="fw-bold mt-3">Tên Sản Phẩm</h4>
+                                        <p class="text-danger fw-bold fs-5">1.500.000đ</p>
+                                        <button class="btn btn-sm btn-primary w-100">🛒 Đến Ngay</button>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                    </div>
+                </div>
             </div>
         </div>
     </div>
-</div>
 
+    <script>
+        function formatDate(dateString) {
+            let date = new Date(dateString);
+            return date.toLocaleString('vi-VN', {
+                day: '2-digit',
+                month: '2-digit',
+                year: 'numeric',
+                hour: '2-digit',
+                minute: '2-digit'
+            });
+        }
 
+        let storeId = null;
 
-<!-- Offcanvas So Sánh Giá -->
-<div class="offcanvas offcanvas-start" tabindex="-1" id="compareProductPrice" aria-labelledby="compareProductPriceLabel">
-    <div class="offcanvas-header">
-        <h5 class="offcanvas-title fw-bold" id="compareProductPriceLabel">🔍 So Sánh Giá Sản Phẩm</h5>
-        <button type="button" class="btn-close" data-bs-dismiss="offcanvas"></button>
-    </div>
-    <div class="offcanvas-body">
-        <div class="row">
-            <!-- Cột trái: Hình ảnh sản phẩm + thông tin -->
-            <div class="col-md-5 border-end pe-3">
-                <div class="text-center">
-                    <img src="assets/img/product/bpt.png" class="img-fluid rounded shadow-sm" alt="Sản phẩm">
-                </div>
-                <h3>Tên cửa hàng</h3>
-                <h4 class="fw-bold mt-3">Tên Sản Phẩm</h4>
-                <p class="text-danger fs-4 fw-bold">💰 1.500.000đ</p>
-                <p class="text-muted">📌 Mô tả ngắn gọn về sản phẩm...</p>
-            </div>
+        function openSubmitOffcanvas(id) {
+            storeId = id; // Gán giá trị storeId
+            document.getElementById('store_id').value = storeId; // Gán vào input ẩn
 
-            <!-- Cột phải: Danh sách cửa hàng -->
-            <div class="col-md-7">
-                <h5 class="mb-3 fw-bold">📍 Danh Sách Cửa Hàng</h5>
-                <div class="store-list">
-                    <div class="card mb-3 shadow-sm">
-                        <div class="row g-0">
-                            <div class="col-md-3 d-flex align-items-center">
-                                <img src="assets/img/product/bpt.png" class="img-fluid rounded-start" alt="Sản phẩm">
-                            </div>
-                            <div class="col-md-9">
-                                <div class="card-body">
-                                    <h6 class="fw-bold">Shop A</h6>
-                                    <h4 class="fw-bold mt-3">Tên Sản Phẩm</h4>
-                                    <p class="text-danger fw-bold fs-5">1.450.000đ</p>
-                                    <button class="btn btn-sm btn-primary w-100">🛒 Đến Ngay</button>
-                                </div>
-                            </div>
-                        </div>
+            var offcanvas = new bootstrap.Offcanvas(document.getElementById('ratingOffcanvas'));
+            offcanvas.show();
+
+            fetch(`/reviews/${storeId}`)
+                .then(response => response.json())
+                .then(reviews => {
+                    console.log(reviews);
+                    let reviewsList = document.getElementById('reviewsList');
+                    reviewsList.innerHTML = ""; // Xóa dữ liệu cũ trước khi tải mới
+
+                    reviews.forEach(review => {
+                        let newReview = `
+                    <div class="review-item border-bottom pb-3 mb-3">
+                        <h6>${review.customer.hoten || "Người dùng ẩn danh"}</h6>
+                        <div class="text-warning">${"★".repeat(review.rate)}${"☆".repeat(5 - review.rate)}</div>
+                        <small class="text-muted">${formatDate(review.created_at)}</small>
+                        <p>${review.noidung}</p>
                     </div>
+                `;
+                        reviewsList.insertAdjacentHTML('beforeend', newReview);
+                    });
+                })
+                .catch(error => console.error("Lỗi khi tải đánh giá:", error));
+        }
 
-                    <div class="card mb-3 shadow-sm">
-                        <div class="row g-0">
-                            <div class="col-md-3 d-flex align-items-center">
-                                <img src="assets/img/product/bpt.png" class="img-fluid rounded-start" alt="Sản phẩm">
-                            </div>
-                            <div class="col-md-9">
-                                <div class="card-body">
-                                    <h6 class="fw-bold">Shop B</h6>
-                                    <h4 class="fw-bold mt-3">Tên Sản Phẩm</h4>
-                                    <p class="text-danger fw-bold fs-5">1.480.000đ</p>
-                                    <button class="btn btn-sm btn-primary w-100">🛒 Đến Ngay</button>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
+        document.addEventListener("DOMContentLoaded", function() {
+            document.getElementById('ratingForm').addEventListener('submit', function(event) {
+                event.preventDefault(); // Ngăn chặn load lại trang
 
-                    <div class="card mb-3 shadow-sm">
-                        <div class="row g-0">
-                            <div class="col-md-3 d-flex align-items-center">
-                                <img src="assets/img/product/bpt.png" class="img-fluid rounded-start" alt="Sản phẩm">
-                            </div>
-                            <div class="col-md-9">
-                                <div class="card-body">
-                                    <h6 class="fw-bold">Shop C</h6>
-                                    <h4 class="fw-bold mt-3">Tên Sản Phẩm</h4>
-                                    <p class="text-danger fw-bold fs-5">1.500.000đ</p>
-                                    <button class="btn btn-sm btn-primary w-100">🛒 Đến Ngay</button>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="card mb-3 shadow-sm">
-                        <div class="row g-0">
-                            <div class="col-md-3 d-flex align-items-center">
-                                <img src="assets/img/product/bpt.png" class="img-fluid rounded-start" alt="Sản phẩm">
-                            </div>
-                            <div class="col-md-9">
-                                <div class="card-body">
-                                    <h6 class="fw-bold">Shop C</h6>
-                                    <h4 class="fw-bold mt-3">Tên Sản Phẩm</h4>
-                                    <p class="text-danger fw-bold fs-5">1.500.000đ</p>
-                                    <button class="btn btn-sm btn-primary w-100">🛒 Đến Ngay</button>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="card mb-3 shadow-sm">
-                        <div class="row g-0">
-                            <div class="col-md-3 d-flex align-items-center">
-                                <img src="assets/img/product/bpt.png" class="img-fluid rounded-start" alt="Sản phẩm">
-                            </div>
-                            <div class="col-md-9">
-                                <div class="card-body">
-                                    <h6 class="fw-bold">Shop C</h6>
-                                    <h4 class="fw-bold mt-3">Tên Sản Phẩm</h4>
-                                    <p class="text-danger fw-bold fs-5">1.500.000đ</p>
-                                    <button class="btn btn-sm btn-primary w-100">🛒 Đến Ngay</button>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="card mb-3 shadow-sm">
-                        <div class="row g-0">
-                            <div class="col-md-3 d-flex align-items-center">
-                                <img src="assets/img/product/bpt.png" class="img-fluid rounded-start" alt="Sản phẩm">
-                            </div>
-                            <div class="col-md-9">
-                                <div class="card-body">
-                                    <h6 class="fw-bold">Shop C</h6>
-                                    <h4 class="fw-bold mt-3">Tên Sản Phẩm</h4>
-                                    <p class="text-danger fw-bold fs-5">1.500.000đ</p>
-                                    <button class="btn btn-sm btn-primary w-100">🛒 Đến Ngay</button>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
+                let form = this;
+                let formData = new FormData(form);
 
-                </div>
-            </div> 
-        </div>
-    </div>
-</div>
+                fetch(form.action, {
+                        method: 'POST',
+                        body: formData,
+                        headers: {
+                            'X-CSRF-TOKEN': document.querySelector('input[name="_token"]').value
+                        }
+                    })
+                    .then(response => response.json()) // Nhận phản hồi JSON từ server
+                    .then(data => {
+                        console.log("Dữ liệu nhận từ server:", data); // Debug xem dữ liệu trả về
+                        if (data.success && data.review) { // Kiểm tra `review` tồn tại
+                            let newReview = `
+                                <div class="review-item border-bottom pb-3 mb-3">
+                                    <h6>${data.review.user_name || "Người dùng ẩn danh"}</h6>
+                                    <div class="text-warning">${"★".repeat(data.review.rating || 0)}${"☆".repeat(5 - (data.review.rating || 0))}</div>
+                                    <small class="text-muted">Vừa xong</small>
+                                    <p>${data.review.comment || ""}</p>
+                                </div>
+                            `;
+                            document.getElementById('reviewsList').insertAdjacentHTML('afterbegin',
+                                newReview);
+
+                            // Xóa form và đóng offcanvas
+                            form.reset();
+                            alert("Cảm ơn bạn đã đánh giá!");
+                        } else {
+                            alert("Dữ liệu không hợp lệ! Vui lòng thử lại.");
+                        }
+                    })
+
+                    .catch(error => {
+                        console.error('Lỗi:', error);
+                        alert("Lỗi kết nối, vui lòng thử lại!");
+                    });
+            });
+        });
+
+        document.addEventListener("hidden.bs.offcanvas", function() {
+            document.querySelectorAll(".offcanvas-backdrop").forEach(el => el.remove());
+            document.body.classList.remove("offcanvas-open"); // Đảm bảo trang không bị khóa cuộn
+        });
+    </script>
 
 </body>
 
