@@ -53,6 +53,8 @@ class ProductService{
                 // Chèn bản ghi vào bảng list_products
                 ListProduct::create($details);
             }
+            DB::commit();
+            return true;
         } catch (\Exception $e) {
             // Xử lý lỗi nếu có
             dd($e->getMessage());
@@ -60,48 +62,6 @@ class ProductService{
 
     }
 
-    // public function update(Request $request, $id)
-    // {
-    //     try {
-    //         // Tìm sản phẩm theo ID
-    //         $product = Product::findOrFail($id);
-    //         $fileName = "";
-
-    //         // Xử lý file ảnh nếu có
-    //         if ($request->hasFile('hinhanh')) {
-    //             $fileName = $request->file('hinhanh')->getClientOriginalName();
-    //             $request->hinhanh->move(public_path('assets/img/product/'), $fileName);
-    //             $data['hinhanh'] = 'assets/img/product/' . $fileName;
-    //         }
-
-    //         // Cập nhật thông tin sản phẩm
-    //         $product->update([
-    //             'ten' => $request->ten,
-    //             'loai' => $request->loai,
-    //             'hinhanh' => $fileName ? 'assets/img/product/' . $fileName : $product->hinhanh, // Giữ nguyên nếu không có ảnh mới
-    //             'discount_id' => $request->discount_id
-    //         ]);
-
-    //         // Tìm chi tiết sản phẩm
-    //         $listProduct = ListProduct::where('product_id', $product->id)->first();
-
-    //         // Kiểm tra nếu request có 'soluong', 'gia', 'store_id'
-    //         if ($request->has(['soluong', 'gia', 'store_id']) && $listProduct) {
-    //             // Cập nhật chi tiết cho list_products
-    //             $listProduct->update([
-    //                 'soluong' => $request->soluong,
-    //                 'gia' => $request->gia,
-    //                 'store_id' => $request->store_id
-    //             ]);
-    //         }
-
-    //         DB::commit();
-    //         return true;
-    //     } catch (\Exception $err) {
-    //         Log::error($err->getMessage());
-    //         return false;
-    //     }
-    // }
     public function update(Request $request, $id)
     {
         try {
@@ -120,7 +80,7 @@ class ProductService{
             $product->update([
                 'ten' => $request->ten,
                 'loai' => $request->loai,
-                'hinhanh' => $fileName ? $fileName : $product->hinhanh,  
+                'hinhanh' => $fileName ? $fileName : $product->hinhanh,
                 'discount_id' => $request->discount_id
             ]);
 
