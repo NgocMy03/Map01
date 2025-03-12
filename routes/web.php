@@ -34,7 +34,6 @@ Route::post('product/storeProduct', [ProductController::class, 'storeProduct'])-
 Route::post('product/{id}/update', [ProductController::class, 'updateProduct'])->where(['id' => '[0-9]+'])->name('product.update');
 Route::post('product/{id}/destroy', [ProductController::class, 'destroyProduct'])->where(['id' => '[0-9]+'])->name('product.destroy');
 
-<<<<<<< HEAD
 Route::get('schedule/index', [ScheduleController::class, 'indexSchedule'])->name('schedule.index');
 Route::get('schedule/create', [ScheduleController::class, 'createSchedule'])->name('schedule.create');
 Route::get('schedule/{id}/edit', [ScheduleController::class, 'editSchedule'])->where(['id' => '[0-9]+'])->name('schedule.edit');
@@ -42,6 +41,4 @@ Route::get('schedule/{id}/delete', [ScheduleController::class, 'deleteSchedule']
 Route::post('schedule/store', [ScheduleController::class, 'storeSchedule'])->name('schedule.storeSchedule');
 Route::post('schedule/{id}/update', [ScheduleController::class, 'updateSchedule'])->where(['id' => '[0-9]+'])->name('schedule.update');
 Route::post('schedule/{id}/destroy', [ScheduleController::class, 'destroySchedule'])->where(['id' => '[0-9]+'])->name('schedule.destroy');
-=======
 Route::post('/rate-store', [RateController::class, 'store'])->name('rate.store');
->>>>>>> e086e18dc674a8c999a166eb149b33ad61c12985
