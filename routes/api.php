@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\ApiController;
+use App\Models\Rate;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 
@@ -20,3 +21,4 @@ Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
 });
 
 Route::get('/stores', [ApiController::class, 'stores'])->name('api.stores');
+Route::get('/compare-product-price/{id}/{storeId}', [ApiController::class, 'compareProductPrice'])->name('api.compareProductPrice');

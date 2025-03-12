@@ -1,3 +1,7 @@
+{{-- @php
+    dd($stores);
+@endphp --}}
+
 <!DOCTYPE html>
 <html lang="en">
 
@@ -25,8 +29,6 @@
 
 
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.css">
-
-
     </link>
 </head>
 
@@ -46,23 +48,28 @@
     }
 
 
-    .star-rating input { display: none; }
-        .star-rating label {
-            font-size: 2rem;
-            color: gray;
-            cursor: pointer;
-        }
-        .star-rating input:checked ~ label,
-        .star-rating label:hover,
-        .star-rating label:hover ~ label {
-            color: gold;
-        }
+    .star-rating input {
+        display: none;
+    }
 
-        #compareProductPrice {
-            width: 70% !important; /* Tăng kích thước lên 70% */
-            max-width: 600px; /* Giới hạn tối đa 900px */
-}
+    .star-rating label {
+        font-size: 2rem;
+        color: gray;
+        cursor: pointer;
+    }
 
+    .star-rating input:checked~label,
+    .star-rating label:hover,
+    .star-rating label:hover~label {
+        color: gold;
+    }
+
+    #compareProductPrice {
+        width: 70% !important;
+        /* Tăng kích thước lên 70% */
+        max-width: 600px;
+        /* Giới hạn tối đa 900px */
+    }
 </style>
 
 <body>
@@ -85,6 +92,7 @@
 
     @php
         $locations = $stores->map(function ($store) {
+            $productPrice = number_format($store->product_price * 1000, 0, ',', '.');
             return [
                 'coords' => array_map('floatval', explode(',', $store->toadoGPS)), // Chuyển tọa độ thành mảng số
                 'name' => $store->ten,
@@ -95,56 +103,24 @@
                                 <div class=\"container my-2\">
                                     <div class=\"swiper mySwiper\">
                                         <div class=\"swiper-wrapper\">
+                                            <input type=\"hidden\" name=\"id_store\" value=\"{$store->product_id}\">
                                             <div class=\"swiper-slide\">
                                                 <div class=\"card\" style=\"width: 100%;\">
                                                     <div class=\"row p-4 g-0 align-items-center\">
                                                         <!-- Hình ảnh bên trái -->
                                                         <div class=\"col-4 d-flex justify-content-center\">
-                                                            <img src=\"assets/img/product/bpt.png\" alt=\"Product 1\" class=\"img-fluid\" width=\"150\">
+                                                            <img src=\"assets/img/product/{$store->product_image}\" alt=\"Product 1\" class=\"img-fluid\" width=\"150\">
                                                         </div>
                                                         <!-- Nội dung bên phải -->
                                                         <div class=\"col-8\">
                                                             <div class=\"card-body\">
-                                                                <h5 class=\"card-title\">Sản phẩm 1</h5>
+                                                                <h5 class=\"card-title\">{$store->product_name}</h5>
+                                                                <span>Giá: {$productPrice}đ</span>
                                                                 <p class=\"card-text\">Mô tả sản phẩm 1</p>
                                                             </div>
                                                         </div>
                                                     </div>
-                                                <button type=\"button\" class=\"btn btn-success mb-2 w-50 d-flex m-auto justify-content-center\" data-bs-toggle=\"offcanvas\" data-bs-target=\"#compareProductPrice\">So sánh giá</button>
-                                                </div>
-                                            </div>
-
-                                            <div class=\"swiper-slide\">
-                                                <div class=\"card\" style=\"width: 100%;\">
-                                                    <div class=\"row p-4 g-0 align-items-center\">
-                                                        <div class=\"col-4 d-flex justify-content-center\">
-                                                            <img src=\"assets/img/product/bpt.png\" alt=\"Product 2\" class=\"img-fluid\" width=\"150\">
-                                                        </div>
-                                                        <div class=\"col-8\">
-                                                            <div class=\"card-body\">
-                                                                <h5 class=\"card-title\">Sản phẩm 2</h5>
-                                                                <p class=\"card-text\">Mô tả sản phẩm 2</p>
-                                                            </div>
-                                                        </div>
-                                                    </div>
-                                                   <button type=\"button\" class=\"btn btn-success mb-2 w-50 d-flex m-auto justify-content-center\" data-bs-toggle=\"offcanvas\" data-bs-target=\"#compareProductPrice\">So sánh giá</button>
-                                                </div>
-                                            </div>
-
-                                            <div class=\"swiper-slide\">
-                                                <div class=\"card\" style=\"width: 100%;\">
-                                                    <div class=\"row p-4 g-0 align-items-center\">
-                                                        <div class=\"col-4 d-flex justify-content-center\">
-                                                            <img src=\"assets/img/product/bpt.png\" alt=\"Product 3\" class=\"img-fluid\" width=\"150\">
-                                                        </div>
-                                                        <div class=\"col-8\">
-                                                            <div class=\"card-body\">
-                                                                <h5 class=\"card-title\">Sản phẩm 3</h5>
-                                                                <p class=\"card-text\">Mô tả sản phẩm 3</p>
-                                                            </div>
-                                                        </div>
-                                                    </div>
-                                                     <button type=\"button\" class=\"btn btn-success mb-2 w-50 d-flex m-auto justify-content-center\" data-bs-toggle=\"offcanvas\" data-bs-target=\"#compareProductPrice\">So sánh giá</button>
+                                                    <button type=\"button\" class=\"btn btn-success mb-2 w-50 d-flex m-auto justify-content-center\" data-bs-toggle=\"offcanvas\" data-bs-target=\"#compareProductPrice\" onclick=\"compareProductPrice({$store->product_id}, {$store->id})\">So sánh giá</button>
                                                 </div>
                                             </div>
                                         </div>
@@ -164,8 +140,7 @@
                                     <button type=\"button\" class=\"btn btn-secondary\" data-bs-toggle=\"offcanvas\" data-bs-target=\"#ratingOffcanvas\">
                                          <i class=\"fa-solid fa-comment pe-2\"></i>Đánh giá
                                     </button>
-                                </div>"
-                            ,
+                                </div>",
                 'icon' => "assets/img/stores/{$store->hinh}",
             ];
         });
@@ -207,7 +182,8 @@
             let currentIcon;
 
             // Debug: In ra tên cửa hàng để kiểm tra
-            console.log("Store name:", location.name);
+            // console.log(location);
+            // console.log("Store coords:", location.coords);
 
             // Kiểm tra theo tên cửa hàng
             if (location.name.includes('CircleK') || location.name.includes('Circle K')) {
@@ -450,181 +426,122 @@
 
 
 
-<!-- Offcanvas Đánh Giá -->
-<div class="offcanvas offcanvas-end" tabindex="-1" id="ratingOffcanvas" aria-labelledby="ratingOffcanvasLabel">
-    <div class="offcanvas-header">
-        <h5 class="offcanvas-title" id="ratingOffcanvasLabel">Đánh Giá Cửa Hàng</h5>
-        <button type="button" class="btn-close" data-bs-dismiss="offcanvas"></button>
-    </div>
-    <div class="offcanvas-body">
-        <!-- Form Đánh Giá -->
-        <form id="ratingForm">
-            <div class="mb-3 text-center star-rating">
-                <input type="radio" id="star5" name="rating" value="5"><label for="star5">★</label>
-                <input type="radio" id="star4" name="rating" value="4"><label for="star4">★</label>
-                <input type="radio" id="star3" name="rating" value="3"><label for="star3">★</label>
-                <input type="radio" id="star2" name="rating" value="2"><label for="star2">★</label>
-                <input type="radio" id="star1" name="rating" value="1"><label for="star1">★</label>
-            </div>
-            <div class="mb-3">
-                <label for="comment" class="form-label">Nhận xét của bạn</label>
-                <textarea class="form-control" id="comment" rows="3" placeholder="Viết nhận xét..."></textarea>
-            </div>
-            <button type="submit" class="btn btn-success w-100">Gửi đánh giá</button>
-        </form>
+    <!-- Offcanvas Đánh Giá -->
+    <div class="offcanvas offcanvas-end" tabindex="-1" id="ratingOffcanvas" aria-labelledby="ratingOffcanvasLabel">
+        <div class="offcanvas-header">
+            <h5 class="offcanvas-title" id="ratingOffcanvasLabel">Đánh Giá Cửa Hàng</h5>
+            <button type="button" class="btn-close" data-bs-dismiss="offcanvas"></button>
+        </div>
+        <div class="offcanvas-body">
+            <!-- Form Đánh Giá -->
+            <form id="ratingForm">
+                <div class="mb-3 text-center star-rating">
+                    <input type="radio" id="star5" name="rating" value="5"><label for="star5">★</label>
+                    <input type="radio" id="star4" name="rating" value="4"><label for="star4">★</label>
+                    <input type="radio" id="star3" name="rating" value="3"><label for="star3">★</label>
+                    <input type="radio" id="star2" name="rating" value="2"><label for="star2">★</label>
+                    <input type="radio" id="star1" name="rating" value="1"><label for="star1">★</label>
+                </div>
+                <div class="mb-3">
+                    <label for="comment" class="form-label">Nhận xét của bạn</label>
+                    <textarea class="form-control" id="comment" rows="3" placeholder="Viết nhận xét..."></textarea>
+                </div>
+                <button type="submit" class="btn btn-success w-100">Gửi đánh giá</button>
+            </form>
 
-        <!-- Dữ liệu giả - Đánh giá gần đây -->
-        <hr>
-        <h5 class="mt-3">⭐ Đánh Giá Gần Đây</h5>
-        
-        <div id="reviewsList">
-            <div class="review-item border-bottom pb-3 mb-3">
-                <h6>Nguyễn Văn A</h6>
-                <div class="text-warning">⭐⭐⭐⭐☆ (4/5)</div>
-                <small class="text-muted">2 ngày trước</small>
-                <p>Shop phục vụ tốt, giao hàng nhanh.</p>
-            </div>
+            <!-- Dữ liệu giả - Đánh giá gần đây -->
+            <hr>
+            <h5 class="mt-3">⭐ Đánh Giá Gần Đây</h5>
 
-            <div class="review-item border-bottom pb-3 mb-3">
-                <h6>Trần Thị B</h6>
-                <div class="text-warning">⭐⭐⭐⭐⭐ (5/5)</div>
-                <small class="text-muted">1 tuần trước</small>
-                <p>Chất lượng sản phẩm rất tốt, mình rất hài lòng.</p>
-            </div>
+            <div id="reviewsList">
+                <div class="review-item border-bottom pb-3 mb-3">
+                    <h6>Nguyễn Văn A</h6>
+                    <div class="text-warning">⭐⭐⭐⭐☆ (4/5)</div>
+                    <small class="text-muted">2 ngày trước</small>
+                    <p>Shop phục vụ tốt, giao hàng nhanh.</p>
+                </div>
 
-            <div class="review-item border-bottom pb-3 mb-3">
-                <h6>Phạm Văn C</h6>
-                <div class="text-warning">⭐⭐⭐☆☆ (3/5)</div>
-                <small class="text-muted">3 tuần trước</small>
-                <p>Sản phẩm ổn, nhưng giao hàng hơi chậm.</p>
+                <div class="review-item border-bottom pb-3 mb-3">
+                    <h6>Trần Thị B</h6>
+                    <div class="text-warning">⭐⭐⭐⭐⭐ (5/5)</div>
+                    <small class="text-muted">1 tuần trước</small>
+                    <p>Chất lượng sản phẩm rất tốt, mình rất hài lòng.</p>
+                </div>
+
+                <div class="review-item border-bottom pb-3 mb-3">
+                    <h6>Phạm Văn C</h6>
+                    <div class="text-warning">⭐⭐⭐☆☆ (3/5)</div>
+                    <small class="text-muted">3 tuần trước</small>
+                    <p>Sản phẩm ổn, nhưng giao hàng hơi chậm.</p>
+                </div>
             </div>
         </div>
     </div>
-</div>
 
 
 
-<!-- Offcanvas So Sánh Giá -->
-<div class="offcanvas offcanvas-start" tabindex="-1" id="compareProductPrice" aria-labelledby="compareProductPriceLabel">
-    <div class="offcanvas-header">
-        <h5 class="offcanvas-title fw-bold" id="compareProductPriceLabel">🔍 So Sánh Giá Sản Phẩm</h5>
-        <button type="button" class="btn-close" data-bs-dismiss="offcanvas"></button>
-    </div>
-    <div class="offcanvas-body">
-        <div class="row">
-            <!-- Cột trái: Hình ảnh sản phẩm + thông tin -->
-            <div class="col-md-5 border-end pe-3">
-                <div class="text-center">
-                    <img src="assets/img/product/bpt.png" class="img-fluid rounded shadow-sm" alt="Sản phẩm">
-                </div>
-                <h3>Tên cửa hàng</h3>
-                <h4 class="fw-bold mt-3">Tên Sản Phẩm</h4>
-                <p class="text-danger fs-4 fw-bold">💰 1.500.000đ</p>
-                <p class="text-muted">📌 Mô tả ngắn gọn về sản phẩm...</p>
+    <!-- Offcanvas So Sánh Giá -->
+    <div class="offcanvas offcanvas-start" tabindex="-1" id="compareProductPrice"
+        aria-labelledby="compareProductPriceLabel">
+        <div class="offcanvas-header">
+            <h5 class="offcanvas-title fw-bold" id="compareProductPriceLabel">🔍 So Sánh Giá Sản Phẩm</h5>
+            <button type="button" class="btn-close" data-bs-dismiss="offcanvas"></button>
+        </div>
+        <div class="offcanvas-body">
+            <div class="row container-compare-product">
             </div>
-
-            <!-- Cột phải: Danh sách cửa hàng -->
-            <div class="col-md-7">
-                <h5 class="mb-3 fw-bold">📍 Danh Sách Cửa Hàng</h5>
-                <div class="store-list">
-                    <div class="card mb-3 shadow-sm">
-                        <div class="row g-0">
-                            <div class="col-md-3 d-flex align-items-center">
-                                <img src="assets/img/product/bpt.png" class="img-fluid rounded-start" alt="Sản phẩm">
-                            </div>
-                            <div class="col-md-9">
-                                <div class="card-body">
-                                    <h6 class="fw-bold">Shop A</h6>
-                                    <h4 class="fw-bold mt-3">Tên Sản Phẩm</h4>
-                                    <p class="text-danger fw-bold fs-5">1.450.000đ</p>
-                                    <button class="btn btn-sm btn-primary w-100">🛒 Đến Ngay</button>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-
-                    <div class="card mb-3 shadow-sm">
-                        <div class="row g-0">
-                            <div class="col-md-3 d-flex align-items-center">
-                                <img src="assets/img/product/bpt.png" class="img-fluid rounded-start" alt="Sản phẩm">
-                            </div>
-                            <div class="col-md-9">
-                                <div class="card-body">
-                                    <h6 class="fw-bold">Shop B</h6>
-                                    <h4 class="fw-bold mt-3">Tên Sản Phẩm</h4>
-                                    <p class="text-danger fw-bold fs-5">1.480.000đ</p>
-                                    <button class="btn btn-sm btn-primary w-100">🛒 Đến Ngay</button>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-
-                    <div class="card mb-3 shadow-sm">
-                        <div class="row g-0">
-                            <div class="col-md-3 d-flex align-items-center">
-                                <img src="assets/img/product/bpt.png" class="img-fluid rounded-start" alt="Sản phẩm">
-                            </div>
-                            <div class="col-md-9">
-                                <div class="card-body">
-                                    <h6 class="fw-bold">Shop C</h6>
-                                    <h4 class="fw-bold mt-3">Tên Sản Phẩm</h4>
-                                    <p class="text-danger fw-bold fs-5">1.500.000đ</p>
-                                    <button class="btn btn-sm btn-primary w-100">🛒 Đến Ngay</button>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="card mb-3 shadow-sm">
-                        <div class="row g-0">
-                            <div class="col-md-3 d-flex align-items-center">
-                                <img src="assets/img/product/bpt.png" class="img-fluid rounded-start" alt="Sản phẩm">
-                            </div>
-                            <div class="col-md-9">
-                                <div class="card-body">
-                                    <h6 class="fw-bold">Shop C</h6>
-                                    <h4 class="fw-bold mt-3">Tên Sản Phẩm</h4>
-                                    <p class="text-danger fw-bold fs-5">1.500.000đ</p>
-                                    <button class="btn btn-sm btn-primary w-100">🛒 Đến Ngay</button>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="card mb-3 shadow-sm">
-                        <div class="row g-0">
-                            <div class="col-md-3 d-flex align-items-center">
-                                <img src="assets/img/product/bpt.png" class="img-fluid rounded-start" alt="Sản phẩm">
-                            </div>
-                            <div class="col-md-9">
-                                <div class="card-body">
-                                    <h6 class="fw-bold">Shop C</h6>
-                                    <h4 class="fw-bold mt-3">Tên Sản Phẩm</h4>
-                                    <p class="text-danger fw-bold fs-5">1.500.000đ</p>
-                                    <button class="btn btn-sm btn-primary w-100">🛒 Đến Ngay</button>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="card mb-3 shadow-sm">
-                        <div class="row g-0">
-                            <div class="col-md-3 d-flex align-items-center">
-                                <img src="assets/img/product/bpt.png" class="img-fluid rounded-start" alt="Sản phẩm">
-                            </div>
-                            <div class="col-md-9">
-                                <div class="card-body">
-                                    <h6 class="fw-bold">Shop C</h6>
-                                    <h4 class="fw-bold mt-3">Tên Sản Phẩm</h4>
-                                    <p class="text-danger fw-bold fs-5">1.500.000đ</p>
-                                    <button class="btn btn-sm btn-primary w-100">🛒 Đến Ngay</button>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-
-                </div>
-            </div> 
         </div>
     </div>
-</div>
+
+    <script>
+        compareProductPrice = (product_id, store_id) => {
+            console.log(product_id);
+            fetch('/api/compare-product-price/' + product_id + "/" + store_id)
+                .then(response => response.json())
+                .then(data => {
+                    console.log(data);
+
+                    document.querySelector(".container-compare-product").innerHTML = "";
+                    document.querySelector(".container-compare-product").innerHTML += `
+                                <div class="col-md-5 border-end pe-3">
+                                        <div class="text-center">
+                                            <img src="assets/img/product/${data[0].hinhanh}" class="img-fluid rounded shadow-sm" alt="Sản phẩm">
+                                        </div>
+                                        <h3>${data[0].store_name}</h3>
+                                        <h4 class="fw-bold mt-3">${data[0].ten}</h4>
+                                        <p class="text-danger fs-4 fw-bold">💰 ${Intl.NumberFormat('vi-VN').format(data[0].gia*1000)}đ</p>
+                                        <p class="text-muted">📌 Mô tả ngắn gön về sản phẩm...</p>
+                                </div>
+                                <div class="col-md-7 list-product">
+                                </div>
+                            `
+                    let col7 = document.querySelector(".list-product");
+                    for (let i = 1; i < data.length; i++) {
+                        let col7_content = document.createElement("div");
+                        col7_content.classList.add("store-list");
+                        col7_content.innerHTML = `
+                                            <div class="card mb-3 shadow-sm">
+                                                <div class="row g-0">
+                                                    <div class="col-md-3 d-flex align-items-center">
+                                                        <img src="assets/img/product/${data[i].hinhanh}" class="img-fluid rounded-start"
+                                                            alt="Sản phẩm">
+                                                    </div>
+                                                    <div class="col-md-9">
+                                                        <div class="card-body">
+                                                            <h6 class="fw-bold">${data[i].store_name}</h6>
+                                                            <h4 class="fw-bold mt-3">${data[i].ten}</h4>
+                                                            <p class="text-danger fw-bold fs-5">${Intl.NumberFormat('vi-VN').format(data[i].gia*1000)}đ</p>
+                                                            <button class="btn btn-sm btn-primary w-100">🛒 Đến Ngay</button>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>`
+                        col7.append(col7_content);
+                    }
+                    // console.log(col7);
+                });
+        }
+    </script>
 
 </body>
 
