@@ -38,20 +38,25 @@
         font-size: 16px;
     }
 
-
     .swiper-button-prev:after {
         font-size: 16px;
     }
 
+    .star-rating {
+        display: flex;
+        flex-direction: row-reverse;
+        justify-content: center;
+        gap: 5px;
+    }
 
     .star-rating input {
         display: none;
     }
 
     .star-rating label {
-        font-size: 2rem;
-        color: gray;
+        font-size: 24px;
         cursor: pointer;
+        color: #ccc;
     }
 
     .star-rating input:checked~label,
@@ -62,9 +67,7 @@
 
     #compareProductPrice {
         width: 70% !important;
-        /* Tăng kích thước lên 70% */
         max-width: 600px;
-        /* Giới hạn tối đa 900px */
     }
 </style>
 
@@ -610,6 +613,7 @@
         </div>
     </div>
 
+    {{-- Đánh giá cửa hàng --}}
     <script>
         function formatDate(dateString) {
             let date = new Date(dateString);
@@ -640,13 +644,13 @@
 
                     reviews.forEach(review => {
                         let newReview = `
-                    <div class="review-item border-bottom pb-3 mb-3">
-                        <h6>${review.customer.hoten || "Người dùng ẩn danh"}</h6>
-                        <div class="text-warning">${"★".repeat(review.rate)}${"☆".repeat(5 - review.rate)}</div>
-                        <small class="text-muted">${formatDate(review.created_at)}</small>
-                        <p>${review.noidung}</p>
-                    </div>
-                `;
+                            <div class="review-item border-bottom pb-3 mb-3">
+                                <h6>${review.customer.hoten || "Người dùng ẩn danh"}</h6>
+                                <div class="text-warning">${"★".repeat(review.rate)}${"☆".repeat(5 - review.rate)}</div>
+                                <small class="text-muted">${formatDate(review.created_at)}</small>
+                                <p>${review.noidung}</p>
+                            </div>
+                        `;
                         reviewsList.insertAdjacentHTML('beforeend', newReview);
                     });
                 })
@@ -702,8 +706,6 @@
             document.body.classList.remove("offcanvas-open"); // Đảm bảo trang không bị khóa cuộn
         });
     </script>
-
 </body>
-
 
 </html>
