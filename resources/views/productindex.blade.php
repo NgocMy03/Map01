@@ -27,8 +27,12 @@
             <li class="active"><strong>Quản lý sản phẩm</strong></li>
         </ol>
     </div>
-    <div class="col-lg-1 col-lg-offset-3 p-2" style="border: 1px solid black; padding: 5px; width: 30px; font-size: 2rem; margin-top:30px;">
+
+    <div class="col-lg-1 col-lg-offset-3 p-2" style="border: 1px solid black; padding: 5px; width: 30px; font-size: 2rem; margin-top:30px; margin-right:10px;">
         <a id="back-to-home" href="{{ route('Home') }}" title="Về trang chủ"><i class="fa fa-home"></i></a>
+    </div>
+    <div class="col-lg-1 p-2" style="border: 1px solid black; padding: 5px; width: 30px; font-size: 2rem; margin-top:30px;">
+        <a id="select-sche" href="{{ route('schedule.index') }}" title="Lịch làm việc"><i class="fa fa-calendar"></i></a>
     </div>
 </div>
 
