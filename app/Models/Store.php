@@ -16,8 +16,12 @@ class Store extends Model
         'toadoGPS',
         'hinh'
     ];
-    public function store(){
-        return $this->hasMany(ListProduct::class, 'store_id', 'id');
+    public function listproduct(){
+        return $this->hasMany(ListProduct::class);
+    }
+
+    public function rates(){
+        return $this->hasMany(Rate::class, 'store_id', 'id');
     }
 
 

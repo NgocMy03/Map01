@@ -21,4 +21,4 @@ Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
 });
 
 Route::get('/stores', [ApiController::class, 'stores'])->name('api.stores');
-Route::get('/compare-product-price/{id}/{storeId}', [ApiController::class, 'compareProductPrice'])->name('api.compareProductPrice');
+Route::get('/reviews/{id}', [ApiController::class, 'getCommets'])->name('rate.getCommets');

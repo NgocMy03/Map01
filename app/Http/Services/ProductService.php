@@ -53,6 +53,8 @@ class ProductService{
                 // Chèn bản ghi vào bảng list_products
                 ListProduct::create($details);
             }
+            DB::commit();
+            return true;
         } catch (\Exception $e) {
             // Xử lý lỗi nếu có
             dd($e->getMessage());
@@ -63,7 +65,8 @@ class ProductService{
     public function update(Request $request, $id)
     {
         try {
-            $product = Product::find($id);
+            // Tìm sản phẩm theo ID
+            $product = Product::findOrFail($id);
             $fileName = "";
 
             // Xử lý file ảnh nếu có
@@ -72,27 +75,26 @@ class ProductService{
                 $request->hinhanh->move(public_path('assets/img/product/'), $fileName);
                 $data['hinhanh'] = 'assets/img/product/' . $fileName;
             }
-            $listProduct = ListProduct::where('product_id', $product->id)->first();
-            // Tạo sản phẩm mới
-            $product = $this->productRepo->update([
+
+            // Cập nhật thông tin sản phẩm
+            $product->update([
                 'ten' => $request->ten,
                 'loai' => $request->loai,
-                'hinhanh' => $fileName,
+                'hinhanh' => $fileName ? $fileName : $product->hinhanh,
                 'discount_id' => $request->discount_id
             ]);
 
+            // Tìm chi tiết sản phẩm
+            $listProduct = ListProduct::where('product_id', $product->id)->first();
+
             // Kiểm tra nếu request có 'soluong', 'gia', 'store_id'
-            if ($request->has(['soluong', 'gia', 'store_id'])) {
-                // Tạo chi tiết cho list_products
-                $details = [
+            if ($request->has(['soluong', 'gia', 'store_id']) && $listProduct) {
+                // Cập nhật chi tiết cho list_products
+                $listProduct->update([
                     'soluong' => $request->soluong,
                     'gia' => $request->gia,
-                    'store_id' => $request->store_id,
-                    'product_id' => $listProduct->product_id  // Sử dụng ID của sản phẩm vừa tạo
-                ];
-
-                // Chèn bản ghi vào bảng list_products
-                ListProduct::update($details);
+                    'store_id' => $request->store_id
+                ]);
             }
 
             DB::commit();

@@ -2,10 +2,9 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\ListProduct;
+use App\Models\Rate;
 use App\Models\Store;
 use Illuminate\Http\Request;
-use Illuminate\Support\Facades\DB;
 
 class ApiController extends Controller
 {
@@ -58,5 +57,10 @@ class ApiController extends Controller
             ->get();
 
         return response()->json($products);
+    }
+
+    public function getCommets($store_id) {
+        $reviews = Rate::with('customer')->where('store_id', $store_id)->latest()->get();
+        return response()->json($reviews);
     }
 }

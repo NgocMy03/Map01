@@ -45,17 +45,13 @@ class ProductController extends Controller
     }
 
     public function storeProduct(ProductRequest $request)
-    {
-        // if ($this->productSer->create($request)) {
-        //     toastify()->success('Thêm mới bản ghi thành công.');
-        //     return redirect()->route('product.index');
-        // }
-        $this->productSer->create($request);
-        // toastify()->error('Thêm mới bản ghi không thành công.');
+{
+    if ($this->productSer->create($request)) {
         toastify()->success('Thêm mới bản ghi thành công.');
-
-        return redirect()->route('product.index');
-    }
+    } else {
+        toastify()->error('Thêm mới bản ghi không thành công.');
+    } return redirect()->route('product.index');
+}
 
     public function editProduct($id){
         $product = $this->productRepo->findById($id);
@@ -66,13 +62,14 @@ class ProductController extends Controller
         return view('productcreate', compact('template','product', 'dis' ,'store','config'));
     }
     public function updateProduct(UpdateProductRequest $request, $id){
-        // if ($this->productSer->update($request, $id)) {
-        //     toastify()->success('Cập nhật bản ghi thành công.');
-        //     return redirect()->route('product.index');
-        // }
-        // toastify()->error('Cập nhật  bản ghi không thành công.');
-        $this->productSer->update($request, $id);
-        toastify()->success('Cập nhật bản ghi thành công.');
+        if ($this->productSer->update($request, $id)) {
+            toastify()->success('Cập nhật bản ghi thành công.');
+        } else{
+            toastify()->error('Cập nhật  bản ghi không thành công.');
+        }
+
+        // $this->productSer->update($request, $id);
+        // toastify()->success('Cập nhật bản ghi thành công.');
         return redirect()->route('product.index');
     }
     public function deleteProduct($id){
