@@ -635,7 +635,7 @@
             var offcanvas = new bootstrap.Offcanvas(document.getElementById('ratingOffcanvas'));
             offcanvas.show();
 
-            fetch(`/reviews/${storeId}`)
+            fetch(`/api/reviews/${storeId}`)
                 .then(response => response.json())
                 .then(reviews => {
                     console.log(reviews);

@@ -35,11 +35,6 @@ class RateController extends Controller
      * @return \Illuminate\Http\Response
      */
 
-     public function getReviews($store_id) {
-        $reviews = Rate::with('customer')->where('store_id', $store_id)->latest()->get();
-        return response()->json($reviews);
-    }
-
     public function store(Request $request)
     {
         $data = $request->validate([

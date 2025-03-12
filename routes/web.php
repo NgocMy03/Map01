@@ -29,4 +29,3 @@ Route::post('product/{id}/update', [ProductController::class, 'updateProduct'])-
 Route::post('product/{id}/destroy', [ProductController::class, 'destroyProduct'])->where(['id' => '[0-9]+'])->name('product.destroy');
 
 Route::post('/rate-store', [RateController::class, 'store'])->name('rate.store');
-Route::get('/reviews/{id}', [RateController::class, 'getReviews'])->name('rate.getReviews');
