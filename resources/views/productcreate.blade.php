@@ -151,6 +151,13 @@
             </div>
         </div>
     </form>
+    <footer>
+        <div class="footer">
+            <div class="text-center">
+                <small> &copy;Copyright: CT298 - N01</small>
+            </div>
+        </div>
+    </footer>
 </div>
 </div>
 </body>
