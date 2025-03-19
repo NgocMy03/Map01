@@ -28,6 +28,7 @@ class ApiController extends Controller
             'products.id as product_id',
             'stores.id as store_id',
             'stores.ten as store_name',
+            'stores.toadoGPS',
             'stores.diachi',
             DB::raw('0 as priority')
         )
@@ -43,6 +44,7 @@ class ApiController extends Controller
             'products.id as product_id',
             'stores.id as store_id',
             'stores.ten as store_name',
+            'stores.toadoGPS',
             'stores.diachi',
             DB::raw('1 as priority')
         )

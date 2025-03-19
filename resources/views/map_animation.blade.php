@@ -131,8 +131,6 @@
                                         <!-- Nút điều hướng -->
                                         <div class=\"swiper-button-next\"></div>
                                         <div class=\"swiper-button-prev\"></div>
-
-
                                     </div>
                                 </div>
 
@@ -244,6 +242,7 @@
 
         // Hàm lấy vị trí hiện tại và vẽ tuyến đường
         function getUserLocationAndRoute(destination) {
+            console.log(destination);
             if (navigator.geolocation) {
                 navigator.geolocation.getCurrentPosition(function(position) {
                     var userLat = position.coords.latitude;
@@ -566,6 +565,7 @@
     </script>
     <script>
         compareProductPrice = (product_id, store_id) => {
+            document.getElementById("compareProductPrice").classList.remove('d-none');
             console.log(product_id);
             fetch('/api/compare-product-price/' + product_id + "/" + store_id)
                 .then(response => response.json())
@@ -590,6 +590,11 @@
                     for (let i = 1; i < data.length; i++) {
                         let col7_content = document.createElement("div");
                         col7_content.classList.add("store-list");
+                        // console.log(data[i].toadoGPS);
+
+                        let toaDo = data[i].toadoGPS.split(",").map(coord => parseFloat(coord.trim()));
+                        toaDo = [...toaDo];
+                        // console.log(toaDo);
                         col7_content.innerHTML = `
                                         <div class="card mb-3 shadow-sm">
                                             <div class="row g-0">
@@ -602,7 +607,7 @@
                                                         <h6 class="fw-bold">${data[i].store_name}</h6>
                                                         <h4 class="fw-bold mt-3">${data[i].ten}</h4>
                                                         <p class="text-danger fw-bold fs-5">${Intl.NumberFormat('vi-VN').format(data[i].gia*1000)}đ</p>
-                                                        <button class="btn btn-sm btn-primary w-100">🛒 Đến Ngay</button>
+                                                        <button class="btn btn-sm btn-primary w-100 btn-goto-store" onclick="getUserLocationAndRoute(${JSON.stringify(toaDo)})">🛒 Đến Ngay</button>
                                                     </div>
                                                 </div>
                                             </div>
@@ -610,6 +615,13 @@
                         col7.append(col7_content);
                     }
                     // console.log(col7);
+                    document.querySelectorAll(".btn-goto-store").forEach(el => {
+                        el.addEventListener("click", function() {
+                            document.getElementById("compareProductPrice").classList.add('d-none');
+                            document.querySelector(".offcanvas-backdrop.show").style.opacity = "0";
+
+                        });
+                    })
                 });
         }
     </script>
