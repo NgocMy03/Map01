@@ -1,3 +1,7 @@
+@php
+    // $sche = DB::table('schedules')->get();
+    // dd($sche);
+@endphp
 <!DOCTYPE html>
 @toastifyCss
 <html>
@@ -51,12 +55,12 @@
         </div>
     @endif
 
-    {{-- @php
-        // $discount_id = isset($schedule) ? $schedule->discount_id : old('discount_id');
-        // $gia = isset($schedule) ? $schedule->listschedule->first()->gia : old('gia');
+    @php
+        $discount_id = isset($schedule) ? $schedule->discount_id : old('discount_id');
+        $gia = isset($schedule) ? $schedule->listschedule->first()->gia : old('gia');
         $staff_id = isset($detail_sche) ? $detail_sche->first()->staff_id : old('staff_id');
         $schedule_id = isset($detail_sche) ? $detail_sche->first()->store_id : old('store_id');
-    @endphp --}}
+    @endphp
 
     @php
         $url =

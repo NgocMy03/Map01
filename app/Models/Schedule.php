@@ -13,6 +13,7 @@ class Schedule extends Model
         'ten',
         'thoigianbatdau',
         'thoigianketthuc',
+
     ];
     public function detail(){
         return $this->hasMany(ScheduleDetail::class, 'schedule_id', 'id');

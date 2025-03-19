@@ -10,6 +10,7 @@ use App\Http\Requests\ScheduleRequest;
 use App\Http\Requests\UpdateScheduleRequest;
 use App\Models\Schedule;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
 
 class ScheduleController extends Controller
 {
@@ -32,14 +33,21 @@ class ScheduleController extends Controller
 
     public function indexSchedule(Request $request)
     {
-        $schedule = Schedule::paginate(10);
+        // $schedule = Schedule::paginate(10);
+        $schedule = DB::table('schedules')
+        ->join('schedule_details', 'schedules.id', '=', 'schedule_details.schedule_id')
+        ->join('staff', 'staff.id', '=', 'schedule_details.staff_id')
+        ->join('stores', 'stores.id', '=', 'staff.store_id')
+        ->select('schedules.*','stores.ten as ts', 'staff.ten as tennv', 'staff.chucvu as cv', 'schedule_details.*')
+        ->paginate(10);
         return view('scheduleindex', compact('schedule'));
     }
 
     public function createSchedule()
     {
         $staff = $this->staffRepository->all();
-        $sche = $this->scheRepository->all();
+        // $sche = $this->scheRepository->all();
+        $sche = DB::table('schedules')->get();
         $template = 'schedulecreate';
         $config['method'] = 'create';
         return view('schedulecreate', compact('template', 'staff','sche', 'config'));
