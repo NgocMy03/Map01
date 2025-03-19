@@ -26,7 +26,7 @@
                     <h2>Quản lý sản phẩm</h2>
                     <ol class="breadcrumb" style="margin-bottom: 10px">
                         <li class="active"><strong>Quản lý sản phẩm</strong></li>
-                      
+
                     </ol>
                 </div>
 
@@ -46,13 +46,15 @@
                 </div>
                 <div class="text-right" style="margin: 5px 10px -3px;">
                     <strong><span>Xin chào: {{ Auth::guard('staff')->user()->ten }}</span></strong>
-                    <strong><p id="status">Trạng thái:
-                        @if (Auth::guard('staff')->user()->status == 1)
-                            <span style="color: green">Online</span>
-                        @else
-                            <span style="color: red">Offline</span>
-                        @endif
-                    </p></strong>
+                    <strong>
+                        <p id="status">Trạng thái:
+                            @if (Auth::guard('staff')->user()->status == 1)
+                                <span style="color: green">Online</span>
+                            @else
+                                <span style="color: red">Offline</span>
+                            @endif
+                        </p>
+                    </strong>
                 </div>
             </div>
 
@@ -144,13 +146,6 @@
             </div>
         </div>
     </div>
-    {{-- <footer>
-    <div class="footer">
-        <div class="text-center">
-            <small> &copy;Copyright: CT298 - N01</small>
-        </div>
-    </div>
-</footer> --}}
 </body>
 
 </html>
