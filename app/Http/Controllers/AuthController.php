@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Http\Requests\AuthRequest;
+use App\Models\Staff;
 use Illuminate\Support\Facades\Auth;
 
 use Illuminate\Http\Request;
@@ -36,16 +37,20 @@ class AuthController extends Controller
         ];
     
         if (Auth::guard('staff')->attempt($credentials)) {
+            $currentStaff = Staff::find(Auth::guard('staff')->user()->id);
+            $currentStaff->update(['status' => true]);
             toastify()->success('Đăng nhập thành công.');
             return redirect()->route('product.index');
         }
     
         // toastify()->error('Email hoặc Mật khẩu không chính xác.');
-        return back()->withErrors(['email' => 'Email không đúng.', 'password' => 'Mật khẩu không đúng.'])->withInput();
+        return back()->withErrors(['email' => 'Email đã nhập không đúng.', 'password' => 'Mật khẩu đã nhập không đúng.'])->withInput();
     }
     
 
     public function logout(Request $request){
+        $currentStaff = Staff::find(Auth::guard('staff')->user()->id);
+        $currentStaff->update(['status' => false]);
         Auth::guard('staff')->logout();
         $request->session()->invalidate();
         $request->session()->regenerateToken();
