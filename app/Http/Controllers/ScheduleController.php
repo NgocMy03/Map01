@@ -78,12 +78,6 @@ class ScheduleController extends Controller
     public function deleteSchedule($id)
     {
         $schedule = $this->scheduleRepo->findById($id);
-        $template = 'scheduledelete';
-        return view('scheduledelete', compact('template', 'schedule'));
-    }
-
-    public function destroySchedule($id)
-    {
         if ($this->scheduleSer->destroy($id)) {
             toastify()->success('Xoá bản ghi thành công.');
             return redirect()->route('schedule.index');
@@ -91,4 +85,5 @@ class ScheduleController extends Controller
         toastify()->error('Xoá bản ghi không thành công.');
         return redirect()->route('schedule.index');
     }
+
 }

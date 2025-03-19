@@ -77,11 +77,6 @@ class ProductController extends Controller
     public function deleteProduct($id)
     {
         $product = $this->productRepo->findById($id);
-        $template = 'productdelete';
-        return view('productdelete', compact('template',  'product'));
-    }
-    public function destroyProduct($id)
-    {
         if ($this->productSer->destroy($id)) {
             toastify()->success('Xoá bản ghi thành công.');
             return redirect()->route('product.index');
@@ -89,4 +84,5 @@ class ProductController extends Controller
         toastify()->success('Xoá bản ghi không thành công.');
         return redirect()->route('product.index');
     }
+
 }

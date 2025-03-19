@@ -19,13 +19,12 @@
 </head>
 
 <body>
+    <div id="wrapper">
+        <div class="gray-bg">
     <div class="row wrapper border-bottom white-bg page-heading">
         <div class="col-lg-8">
             <h2>Quản lý lịch làm việc</h2>
             <ol class="breadcrumb" style="margin-bottom: 10px">
-                <li>
-                    <a href="http://localhost:8080/dasboard/index">Dashboard</a>
-                </li>
                 <li class="active"><strong>Quản lý lịch làm việc</strong></li>
             </ol>
         </div>
@@ -95,8 +94,15 @@
                                         <td class="text-center">
                                             <a href="{{ route('schedule.edit', $sche->id) }}"
                                                 class="btn btn-success"><i class="fa fa-edit"></i></a>
-                                            <a href="{{ route('schedule.delete', $sche->id) }}"
-                                                class="btn btn-danger"><i class="fa fa-trash"></i></a>
+                                            <form action="{{ route('schedule.delete', $sche->id) }}" method="POST"
+                                                style="display:inline;">
+                                                @csrf
+                                                @method('DELETE')
+                                                <button type="submit" class="btn btn-danger"
+                                                    onclick="return confirm('Bạn có chắc chắn muốn xóa mục này?')">
+                                                    <i class="fa fa-trash"></i>
+                                                </button>
+                                            </form>
                                         </td>
                                     </tr>
                                 @endforeach
@@ -108,6 +114,8 @@
             </div>
         </div>
     </div>
+        </div>
+</div>
 </body>
 
 </html>

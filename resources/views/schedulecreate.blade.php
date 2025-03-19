@@ -19,14 +19,13 @@
 </head>
 
 <body>
+    <div id="wrapper">
+        <div class="gray-bg">
     @if ($config['method'] == 'create')
         <div class="row wrapper border-bottom white-bg page-heading">
             <div class="col-lg-8">
                 <h2>Thêm mới lịch làm việc</h2>
                 <ol class="breadcrumb" style="margin-bottom: 10px">
-                    <li>
-                        <a href="http://localhost:8080/dasboard/index">Dashboard</a>
-                    </li>
                     <li class="active"><strong>Thêm mới lịch làm việc</strong></li>
                 </ol>
             </div>
@@ -37,9 +36,6 @@
             <div class="col-lg-8">
                 <h2>Chỉnh sửa thông tin lịch làm việc</h2>
                 <ol class="breadcrumb" style="margin-bottom: 10px">
-                    <li>
-                        <a href="http://localhost:8080/dasboard/index">Dashboard</a>
-                    </li>
                     <li class="active"><strong>Chỉnh sửa thông tin lịch làm việc</strong></li>
                 </ol>
             </div>
@@ -160,6 +156,8 @@
             </div>
         </div>
     </form>
+</div>
+</div>
 </body>
 
 </html>
