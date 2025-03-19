@@ -31,13 +31,6 @@
                         <li class="active"><strong>Quản lý lịch làm việc</strong></li>
                     </ol>
                 </div>
-            <div class="row wrapper border-bottom white-bg page-heading">
-                <div class="col-lg-8">
-                    <h2>Quản lý lịch làm việc</h2>
-                    <ol class="breadcrumb" style="margin-bottom: 10px">
-                        <li class="active"><strong>Quản lý lịch làm việc</strong></li>
-                    </ol>
-                </div>
 
                 <div class="col-lg-1 col-lg-offset-3 p-2"
                     style="border: 1px solid black; padding: 5px; width: 30px; font-size: 2rem; margin-top:30px; margin-right:10px;">
@@ -49,23 +42,8 @@
                             class="fa fa-plus"></i></a>
                 </div>
             </div>
-                <div class="col-lg-1 col-lg-offset-3 p-2"
-                    style="border: 1px solid black; padding: 5px; width: 30px; font-size: 2rem; margin-top:30px; margin-right:10px;">
-                    <a id="back-to-home" href="{{ route('Home') }}" title="Về trang chủ"><i class="fa fa-home"></i></a>
-                </div>
-                <div class="col-lg-1 p-2"
-                    style="border: 1px solid black; padding: 5px; width: 30px; font-size: 2rem; margin-top:30px;">
-                    <a id="select-product" href="{{ route('product.index') }}" title="Sản phẩm"><i
-                            class="fa fa-plus"></i></a>
-                </div>
-            </div>
 
-            <div class="row mt20">
-                <div class="col-lg-12">
-                    <div class="ibox float-e-margins">
-                        <div class="ibox-title">
-                            <h5>Danh sách lịch làm việc</h5>
-                        </div>
+
             <div class="row mt20">
                 <div class="col-lg-12">
                     <div class="ibox float-e-margins">
@@ -136,7 +114,6 @@
                 </div>
             </div>
         </div>
-    </div>
     </div>
 </body>
 
