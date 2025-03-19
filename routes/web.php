@@ -24,7 +24,7 @@ Route::get('/map-animation', [StoreController::class, 'MapAnimation'])->name('Ma
 
 Route::get('/login', [AuthController::class, 'showLoginForm'])->name('login.form');
 Route::post('/login', [AuthController::class, 'login'])->name('login');
-Route::post('/logout', [AuthController::class, 'logout'])->name('logout');
+Route::get('/logout', [AuthController::class, 'logout'])->name('logout');
 
 Route::get('product/index', [ProductController::class, 'indexProduct'])->name('product.index');
 Route::get('product/create', [ProductController::class, 'createProduct'])->name('product.create');
