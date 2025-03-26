@@ -1,8 +1,6 @@
-@php
-    // $sche = DB::table('schedules')->get();
-    // dd($sche);
-    // dd($schedule);
-@endphp
+{{-- @php
+    dd($scheduleOfStaff, $staff);
+@endphp --}}
 <!DOCTYPE html>
 @toastifyCss
 <html>
@@ -26,14 +24,6 @@
 <body>
     <div id="wrapper">
         <div class="gray-bg">
-            <div class="row wrapper border-bottom white-bg page-heading">
-                <div class="col-lg-8">
-                    <h2>Thêm mới lịch làm việc</h2>
-                    <ol class="breadcrumb" style="margin-bottom: 10px">
-                        <li class="active"><strong>Thêm mới lịch làm việc</strong></li>
-                    </ol>
-                </div>
-            </div>
             @if ($errors->any())
                 <div class="alert alert-danger">
                     <ul>
@@ -45,10 +35,7 @@
             @endif
 
 
-
-
-
-            <form action="{{ route('schedule.storeSchedule') }}" method="post" class="box"
+            <form action="{{ route('schedule.update', $scheduleOfStaff->id) }}" method="post" class="box"
                 enctype="multipart/form-data">
                 @csrf
                 <div class="wrapper wrapper-content animated fadeInRight">
@@ -69,7 +56,8 @@
                                             <div class="form-row">
                                                 <label for="" class="control-label text-left">Ngày làm việc<span
                                                         class="text-danger">(*)</span></label>
-                                                <input type="date" name="ngay" value="" class="form-control"
+                                                <input type="date" name="ngay"
+                                                    value="{{ $scheduleOfStaff->ngay }}" class="form-control"
                                                     placeholder="" autocomplete="off">
                                                 @error('date')
                                                     <div class="text-danger">{{ $message }}</div>
@@ -81,32 +69,27 @@
                                                 <label for="" class="control-label text-left">Ca làm việc<span
                                                         class="text-danger">(*)</span></label>
                                                 <select name="schedule_id" class="form-control js-single-setup">
-                                                    @foreach ($schedules as $schedule)
-                                                        <option value="{{ $schedule->id }}">
+                                                    @foreach ($sche as $schedule)
+                                                        <option value="{{ $schedule->id }}"
+                                                            @selected($schedule->id == $scheduleOfStaff->schedule_id)>
                                                             {{ $schedule->ten . ' - ' . $schedule->thoigianbatdau . '-' . $schedule->thoigianketthuc }}
                                                         </option>
                                                     @endforeach
 
                                                 </select>
                                             </div>
-
                                         </div>
                                     </div>
                                     <div class="row mb15">
-
                                         <div class="col-lg-6">
                                             <div class="form-row">
                                                 <label for="" class="control-label text-left">Nhân viên<span
                                                         class="text-danger">(*)</span></label>
-
-                                                <select name="staff_id" class="form-control js-single-setup">
-                                                    @foreach ($staffs as $staff)
-                                                        <option value="{{ $staff->id }}">{{ $staff->ten }}
-                                                        </option>
-                                                    @endforeach
-                                                </select>
+                                                <input type="text" name="{{ $staff[0]->id }}"
+                                                    value="{{ $staff[0]->ten }}" class="form-control" placeholder=""
+                                                    autocomplete="off" readonly>
+                                                <input type="hidden" name="staff_id" value="{{ $staff[0]->id }}">
                                             </div>
-
                                         </div>
                                     </div>
                                 </div>

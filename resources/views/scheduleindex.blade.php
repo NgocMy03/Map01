@@ -79,7 +79,7 @@
                                         <th>Tên nhân viên</th>
                                         <th>Cửa hàng</th>
                                         <th>Khung giờ</th>
-
+                                        <th>Ngày làm</th>
                                         <th class="text-center">Thao tác</th>
                                     </tr>
                                 </thead>
@@ -91,8 +91,10 @@
                                             <td>{{ $dewa->tennv }}</td>
                                             <td>{{ $dewa->ts }}</td>
                                             <td>{{ $dewa->thoigianbatdau }} - {{ $dewa->thoigianketthuc }}</td>
+                                            <td>{{ $dewa->ngay }}</td>
+                                            </td>
                                             <td class="text-center">
-                                                <a href="{{ route('schedule.edit', $dewa->id) }}"
+                                                <a href="{{ route('schedule.edit', $dewa->schedule_details_id) }}"
                                                     class="btn btn-success"><i class="fa fa-edit"></i></a>
                                                 <form action="{{ route('schedule.delete', $dewa->id) }}" method="POST"
                                                     style="display:inline;">
