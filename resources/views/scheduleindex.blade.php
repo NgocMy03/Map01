@@ -79,13 +79,13 @@
                                         <th>Tên nhân viên</th>
                                         <th>Cửa hàng</th>
                                         <th>Khung giờ</th>
-                                        <th>Ngày</th>
+                                        <th>Ngày làm</th>
                                         <th class="text-center">Thao tác</th>
                                     </tr>
                                 </thead>
 
-                                    <tbody>
-                                        @foreach ($schedule as $dewa)
+                                <tbody>
+                                    @foreach ($schedule as $dewa)
                                         <tr>
                                             <td>{{ $dewa->ten }}</td>
                                             <td>{{ $dewa->cv }}</td>
@@ -94,10 +94,11 @@
                                             <td>{{ $dewa->thoigianbatdau }} - {{ $dewa->thoigianketthuc }}</td>
                                             <td>{{ $dewa->ngay }}</td>
                                             <td class="text-center">
-                                                <a href="{{ route('schedule.edit', $dewa->id) }}"
+                                                <a href="{{ route('schedule.edit', $dewa->schedule_details_id) }}"
                                                     class="btn btn-success"><i class="fa fa-edit"></i></a>
-                                                <form action="{{ route('schedule.delete', $dewa->id) }}" method="POST"
-                                                    style="display:inline;">
+                                                <form
+                                                    action="{{ route('schedule.delete', $dewa->schedule_details_id) }}"
+                                                    method="POST" style="display:inline;">
                                                     @csrf
                                                     @method('DELETE')
                                                     <button type="submit" class="btn btn-danger"
@@ -107,8 +108,8 @@
                                                 </form>
                                             </td>
                                         </tr>
-                                        @endforeach
-                                    </tbody>
+                                    @endforeach
+                                </tbody>
 
                             </table>
                             {{ $schedule->links('pagination::bootstrap-4') }}

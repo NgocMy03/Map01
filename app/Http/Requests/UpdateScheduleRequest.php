@@ -27,7 +27,7 @@ class UpdateScheduleRequest extends FormRequest
             'ngay' => 'required|date', // Ngày làm việc là bắt buộc và phải là một ngày hợp lệ
             'schedule_id' => 'required|exists:schedules,id',
             //'trangthai' => 'required|in:Checkin,Checkout', // Trạng thái đơn hàng là bắt buộc và phải là một trong các giá trị đã định nghĩa
-            'staff_id' => 'required|exists:staff,id', // Thay 'your_staff_table' bằng tên bảng thực tế
+            'staff_id' => 'exists:staff,id', // Thay 'your_staff_table' bằng tên bảng thực tế
         ];
     }
 

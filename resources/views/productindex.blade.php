@@ -120,7 +120,7 @@
                                                     @foreach ($prod->listproduct as $list)
                                                         <td class="stock-warning" data-stock="{{ $list->soluong }}"
                                                             data-min-stock="10">{{ $list->soluong }}</td>
-                                                        <td>{{ $list->gia }}</td>
+                                                        <td>{{ number_format($list->gia, 0, ',', '.') }} đ</td>
                                                         <td>{{ $list->store->ten }}</td>
                                                     @endforeach
                                                 @endif
