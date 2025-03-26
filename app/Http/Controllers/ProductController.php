@@ -11,6 +11,8 @@ use Illuminate\Http\Request;
 use App\Http\Requests\ProductRequest;
 use App\Http\Requests\UpdateProductRequest;
 use App\Models\Discount;
+use App\Models\ListProduct;
+use App\Models\Store;
 
 class ProductController extends Controller
 {
@@ -83,6 +85,37 @@ class ProductController extends Controller
         }
         toastify()->success('Xoá bản ghi không thành công.');
         return redirect()->route('product.index');
+    }
+
+    public function getProducts()
+    {
+        // Lấy tất cả sản phẩm từ bảng products
+        $list = ListProduct::all();
+
+        // Khởi tạo mảng để lưu dữ liệu kết hợp
+        $combinedData = [];
+
+        foreach ($list as $item) {
+            // Lấy thông tin sản phẩm
+            $product = Product::find($item->product_id);
+            // Lấy thông tin cửa hàng
+            $store = Store::find($item->store_id);
+
+            if ($product && $store) {
+                $combinedData[] = [
+                    'product_id' => $product->id,
+                    'product_ten' => $product->ten,
+                    'discount_id' => $product->discount_id,
+                    'store_id' => $store->id,
+                    'store_ten' => $store->ten,
+                    // 'coords' => $store->coords,
+                    // 'popupContent' => $store->popupContent,
+                ];
+            }
+        }
+
+        // Trả về dữ liệu kết hợp dưới dạng JSON
+        return response()->json($combinedData);
     }
 
 }

@@ -78,9 +78,12 @@
 <body>
     <div class="container-fluid p-0">
         <input type="text" id="search-box" class="form-control" placeholder="Tìm kiếm địa điểm...">
+        <input type="text" id="search-product-box" class="form-control" placeholder="Tìm kiếm sản phẩm...">
         <a id="back-to-home" href="{{ route('Home') }}" title="Về trang chủ"><i class="fa-solid fa-house"></i></a>
         <button id="search-btn" type="button"><i class="fa-solid fa-magnifying-glass"></i></button>
+        <button id="search-product-btn" type="button"><i class="fa-solid fa-magnifying-glass"></i></button>
         <ul id="suggestions"></ul>
+        <ul id="recommend"></ul>
         <div id="map"></div>
         <button id="locate-btn" title="Xác định vị trí của bạn">
             <i class="fa-solid fa-location-crosshairs"></i>
@@ -94,6 +97,7 @@
     </div>
 
     @php
+        // dd($stores);
         $locations = $stores->map(function ($store) {
             $productPrice = number_format($store->product_price * 1000, 0, ',', '.');
             return [
@@ -235,6 +239,62 @@
                             suggestions.innerHTML = "";
                         });
                         suggestions.appendChild(li);
+                    }
+                });
+            }
+        });
+
+        //tìm kiếm sản phẩm hiện thông báo khuyến mãi
+        var combinedData = [];
+
+        // Gọi lấy dữ liệu sản phẩm
+        fetch('/products')
+            .then(response => {
+                if (!response.ok) {
+                    throw new Error('Mạng không kết nối');
+                }
+                return response.json();
+            })
+            .then(data => {
+                console.log(data); // Kiểm tra dữ liệu sản phẩm
+                combinedData = data; // Lưu dữ liệu sản phẩm vào biến combinedData
+            })
+            .catch(error => console.error('Lỗi không lấy được sản phẩm', error));
+
+        var searchProductBox = document.getElementById('search-product-box');
+        var recommend = document.getElementById('recommend');
+
+        searchProductBox.addEventListener('input', function() {
+            var searchProductText = this.value.toLowerCase();
+            recommend.innerHTML = "";
+            if (searchProductText) {
+                combinedData.forEach(combined => {
+                    if (combined.product_ten.toLowerCase().includes(searchProductText)) {
+                        var li = document.createElement('li');
+                        li.textContent = combined.product_ten;
+
+                        // Hiển thị thông báo nếu sản phẩm có discount_id
+                        if (combined.discount_id && combined.discount_id !== 2) {
+                            var discountNotice = document.createElement('span');
+                            discountNotice.textContent = ' (Có khuyến mãi!)';
+                            discountNotice.style.color = 'blue'; // Đổi màu chữ thành xanh
+                            li.appendChild(discountNotice); // Thêm thông báo vào li
+                        }
+
+                        li.addEventListener('click', function() {
+                            // Tìm kiếm location có cùng store_id
+                            locations.forEach(location => {
+                                if (location.name === combined.store_ten) {
+                                    // Chuyển hướng đến tọa độ của cửa hàng
+                                    map.setView(location.coords, 15);
+                                    L.popup().setLatLng(location.coords).setContent(location
+                                            .popupContent)
+                                        .openOn(map);
+                                }
+                            });
+                        });
+
+                        recommend.appendChild(li);
                     }
                 });
             }

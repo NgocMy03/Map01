@@ -67,4 +67,8 @@ class ApiController extends Controller
         $reviews = Rate::with('customer')->where('store_id', $store_id)->latest()->get();
         return response()->json($reviews);
     }
+
+    public function storeAndProduct() {
+        return response()->json(ListProduct::all());
+    }
 }

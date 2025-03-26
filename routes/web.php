@@ -22,6 +22,7 @@ use Illuminate\Support\Facades\Route;
 Route::get('/', [HomeController::class, 'home'])->name('Home');
 Route::get('/map-real-life', [StoreController::class, 'MapRealLife'])->name('MapRealLife');
 Route::get('/map-animation', [StoreController::class, 'MapAnimation'])->name('MapAnimation');
+Route::get('/products', [ProductController::class, 'getProducts'])->name('Products');
 
 Route::get('/login', [AuthController::class, 'showLoginForm'])->name('login.form');
 Route::post('/login', [AuthController::class, 'login'])->name('login');
