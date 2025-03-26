@@ -96,60 +96,146 @@
         </button>
     </div>
 
+    {{-- @php
+        // dd($stores);
+        $locations = $stores->map(function ($store) {
+            // Chuyển các trường chuỗi product_ids, product_names, product_images, và product_prices thành mảng
+            $productIds = explode(',', $store->product_ids);
+            $productNames = explode(',', $store->product_names);
+            $productImages = explode(',', $store->product_images);
+            $productPrices = explode(',', $store->product_prices);
+            dd($productPrices);
+
+            // Tạo nội dung popup cho mỗi sản phẩm
+            $productPopupContent = '';
+            foreach ($productIds as $index => $productId) {
+                $productPrice = number_format($productPrices[$index] * 1000, 0, ',', '.'); // Chuyển giá thành định dạng
+                $productPopupContent .= "<div class=\"swiper-slide\">
+            <div class=\"card\" style=\"width: 100%;\">
+                <div class=\"row p-4 g-0 align-items-center\">
+                    <!-- Hình ảnh bên trái -->
+                    <div class=\"col-4 d-flex justify-content-center\">
+                        <img src=\"assets/img/product/{$productImages[$index]}\" alt=\"Product {$productId}\" class=\"img-fluid\" width=\"150\">
+                    </div>
+                    <!-- Nội dung bên phải -->
+                    <div class=\"col-8\">
+                        <div class=\"card-body\">
+                            <h5 class=\"card-title\">{$productNames[$index]}</h5>
+                            <span>Giá: {$productPrice}đ</span>
+                            <p class=\"card-text\">Mô tả sản phẩm {$productId}</p>
+                        </div>
+                    </div>
+                </div>
+                <button type=\"button\" class=\"btn btn-success mb-2 w-50 d-flex m-auto justify-content-center\" data-bs-toggle=\"offcanvas\" data-bs-target=\"#compareProductPrice\" onclick=\"compareProductPrice({$productId}, {$store->id})\">So sánh giá</button>
+            </div>
+        </div>";
+            }
+
+            // Xử lý tọa độ của cửa hàng
+            $coords = array_map('floatval', explode(',', $store->toadoGPS)); // Chuyển tọa độ thành mảng số
+
+            // Trả về dữ liệu của cửa hàng
+            return [
+                'coords' => $coords,
+                'name' => $store->store_name,
+                'popupContent' => "<img src=\"assets/img/stores/{$store->product_images[0]}\" width=\"45\">
+                           <h3>{$store->store_name}</h3>
+                           <p>{$store->diachi}</p>
+                           <p>SĐT: {$store->SDT}</p>
+                           <div class=\"container my-2\">
+                               <div class=\"swiper mySwiper\">
+                                   <div class=\"swiper-wrapper\">
+                                       <input type=\"hidden\" name=\"id_store\" value=\"{$store->id}\">
+                                       {$productPopupContent}
+                                   </div>
+                                   <!-- Nút điều hướng -->
+                                   <div class=\"swiper-button-next\"></div>
+                                   <div class=\"swiper-button-prev\"></div>
+                               </div>
+                           </div>
+                           <div class=\"d-flex justify-content-between align-content-center\">
+                               <button class=\"btn btn-primary btn-routing-move\" onclick=\"getUserLocationAndRoute([{$store->toadoGPS}])\">
+                                   <i class=\"fa-solid fa-car pe-2\"></i>Đường đi
+                               </button>
+                               <button type=\"button\" class=\"btn btn-secondary\" onclick=\"openSubmitOffcanvas({$store->id})\" data-bs-toggle=\"offcanvas\" data-bs-target=\"#ratingOffcanvas\">
+                                    <i class=\"fa-solid fa-comment pe-2\"></i>Đánh giá
+                               </button>
+                           </div>",
+                'icon' => "assets/img/stores/{$store->product_images[0]}", // Lấy ảnh sản phẩm đầu tiên làm biểu tượng
+            ];
+        });
+
+    @endphp --}}
     @php
         // dd($stores);
         $locations = $stores->map(function ($store) {
-            $productPrice = number_format($store->product_price * 1000, 0, ',', '.');
+            // Chuyển các trường chuỗi product_ids, product_names, product_images, và product_prices thành mảng
+            $productIds = explode(',', $store->product_ids);
+            $productNames = explode(',', $store->product_names);
+            $productImages = explode(',', $store->product_images);
+            $productPrices = explode(',', $store->product_prices);
+
+            // Tạo nội dung popup cho mỗi sản phẩm
+            $productPopupContent = '';
+            foreach ($productIds as $index => $productId) {
+                $productPrice = number_format(floatval($productPrices[$index]) * 1000, 0, ',', '.');
+
+                $productPopupContent .= "<div class=\"swiper-slide\">
+                <div class=\"card\" style=\"width: 100%;\">
+                    <div class=\"row p-4 g-0 align-items-center\">
+                        <!-- Hình ảnh bên trái -->
+                        <div class=\"col-4 d-flex justify-content-center\">
+                            <img src=\"assets/img/product/{$productImages[$index]}\" alt=\"Product {$productId}\" class=\"img-fluid\" width=\"150\">
+                        </div>
+                        <!-- Nội dung bên phải -->
+                        <div class=\"col-8\">
+                            <div class=\"card-body\">
+                                <h5 class=\"card-title\">{$productNames[$index]}</h5>
+                                <span>Giá: {$productPrice}đ</span>
+                                <p class=\"card-text\">Mô tả sản phẩm {$productId}</p>
+                            </div>
+                        </div>
+                    </div>
+                    <button type=\"button\" class=\"btn btn-success mb-2 w-50 d-flex m-auto justify-content-center\" data-bs-toggle=\"offcanvas\" data-bs-target=\"#compareProductPrice\" onclick=\"compareProductPrice({$productId}, {$store->id})\">So sánh giá</button>
+                </div>
+            </div>";
+            }
+
+            // Xử lý tọa độ của cửa hàng
+            $coords = array_map('floatval', explode(',', $store->toadoGPS)); // Chuyển tọa độ thành mảng số
+            // dd($store);
+            // Trả về dữ liệu của cửa hàng
             return [
-                'coords' => array_map('floatval', explode(',', $store->toadoGPS)), // Chuyển tọa độ thành mảng số
-                'name' => $store->ten,
+                'coords' => $coords,
+                'name' => $store->store_name,
                 'popupContent' => "<img src=\"assets/img/stores/{$store->hinh}\" width=\"45\">
-                                <h3>{$store->ten}</h3>
-                                <p>{$store->diachi}</p>
-                                <p>SĐT: {$store->SDT}</p>
-                                <div class=\"container my-2\">
-                                    <div class=\"swiper mySwiper\">
-                                        <div class=\"swiper-wrapper\">
-                                            <input type=\"hidden\" name=\"id_store\" value=\"{$store->product_id}\">
-                                            <div class=\"swiper-slide\">
-                                                <div class=\"card\" style=\"width: 100%;\">
-                                                    <div class=\"row p-4 g-0 align-items-center\">
-                                                        <!-- Hình ảnh bên trái -->
-                                                        <div class=\"col-4 d-flex justify-content-center\">
-                                                            <img src=\"assets/img/product/{$store->product_image}\" alt=\"Product 1\" class=\"img-fluid\" width=\"150\">
-                                                        </div>
-                                                        <!-- Nội dung bên phải -->
-                                                        <div class=\"col-8\">
-                                                            <div class=\"card-body\">
-                                                                <h5 class=\"card-title\">{$store->product_name}</h5>
-                                                                <span>Giá: {$productPrice}đ</span>
-                                                                <p class=\"card-text\">Mô tả sản phẩm 1</p>
-                                                            </div>
-                                                        </div>
-                                                    </div>
-                                                    <button type=\"button\" class=\"btn btn-success mb-2 w-50 d-flex m-auto justify-content-center\" data-bs-toggle=\"offcanvas\" data-bs-target=\"#compareProductPrice\" onclick=\"compareProductPrice({$store->product_id}, {$store->id})\">So sánh giá</button>
-                                                </div>
-                                            </div>
-                                        </div>
-
-                                        <!-- Nút điều hướng -->
-                                        <div class=\"swiper-button-next\"></div>
-                                        <div class=\"swiper-button-prev\"></div>
-                                    </div>
-                                </div>
-
-                                <div class=\"d-flex justify-content-between align-content-center\">
-                                    <button class=\"btn btn-primary btn-routing-move\" onclick=\"getUserLocationAndRoute([{$store->toadoGPS}])\">
-                                        <i class=\"fa-solid fa-car pe-2\"></i>Đường đi
-                                    </button>
-                                    <button type=\"button\" class=\"btn btn-secondary\" onclick=\"openSubmitOffcanvas({$store->id})\" data-bs-toggle=\"offcanvas\" data-bs-target=\"#ratingOffcanvas\">
-                                         <i class=\"fa-solid fa-comment pe-2\"></i>Đánh giá
-                                    </button>
-                                </div>",
-                'icon' => "assets/img/stores/{$store->hinh}",
+                               <h3>{$store->store_name}</h3>
+                               <p>{$store->diachi}</p>
+                               <p>SĐT: {$store->SDT}</p>
+                               <div class=\"container my-2\">
+                                   <div class=\"swiper mySwiper\">
+                                       <div class=\"swiper-wrapper\">
+                                           <input type=\"hidden\" name=\"id_store\" value=\"{$store->id}\">
+                                           {$productPopupContent}
+                                       </div>
+                                       <!-- Nút điều hướng -->
+                                       <div class=\"swiper-button-next\"></div>
+                                       <div class=\"swiper-button-prev\"></div>
+                                   </div>
+                               </div>
+                               <div class=\"d-flex justify-content-between align-content-center\">
+                                   <button class=\"btn btn-primary btn-routing-move\" onclick=\"getUserLocationAndRoute([{$store->toadoGPS}])\">
+                                       <i class=\"fa-solid fa-car pe-2\"></i>Đường đi
+                                   </button>
+                                   <button type=\"button\" class=\"btn btn-secondary\" onclick=\"openSubmitOffcanvas([{$store->id}])\" data-bs-toggle=\"offcanvas\" data-bs-target=\"#ratingOffcanvas\">
+                                        <i class=\"fa-solid fa-comment pe-2\"></i>Đánh giá
+                                   </button>
+                               </div>",
+                'icon' => "assets/img/stores/{$productImages[0]}", // Lấy ảnh sản phẩm đầu tiên làm biểu tượng
             ];
         });
     @endphp
+
 
     <script>
         var map = L.map('map').setView([10.0275903, 105.7664918], 13);
@@ -546,9 +632,9 @@
         let storeId = null;
 
         function openSubmitOffcanvas(id) {
-            storeId = id; // Gán giá trị storeId
+            storeId = id[0]; // Gán giá trị storeId
             document.getElementById('store_id').value = storeId; // Gán vào input ẩn
-
+            console.log(storeId);
             var offcanvas = new bootstrap.Offcanvas(document.getElementById('ratingOffcanvas'));
             offcanvas.show();
 

@@ -37,10 +37,11 @@ class RateController extends Controller
 
     public function store(Request $request)
     {
+
         $data = $request->validate([
             'rating' => 'required',
             'comment' => 'required',
-        ],[
+        ], [
             'rating.required' => 'Rating is required',
             'comment.required' => 'Comment is required',
         ]);
