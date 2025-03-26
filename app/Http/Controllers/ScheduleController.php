@@ -9,6 +9,7 @@ use App\Http\Services\ScheduleDetailService;
 use App\Http\Requests\ScheduleRequest;
 use App\Http\Requests\UpdateScheduleRequest;
 use App\Models\Schedule;
+use App\Models\ScheduleDetail;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 
@@ -39,6 +40,7 @@ class ScheduleController extends Controller
         ->join('staff', 'staff.id', '=', 'schedule_details.staff_id')
         ->join('stores', 'stores.id', '=', 'staff.store_id')
         ->select('schedules.*','stores.ten as ts', 'staff.ten as tennv', 'staff.chucvu as cv', 'schedule_details.*')
+        ->where('schedule_details.deleted_at', null)
         ->paginate(10);
         return view('scheduleindex', compact('schedule'));
     }
@@ -83,9 +85,11 @@ class ScheduleController extends Controller
         return redirect()->route('schedule.index');
     }
 
+
     public function deleteSchedule($id)
     {
         $schedule = $this->scheduleRepo->findById($id);
+
         if ($this->scheduleSer->destroy($id)) {
             toastify()->success('Xoá bản ghi thành công.');
             return redirect()->route('schedule.index');
