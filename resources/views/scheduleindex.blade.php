@@ -96,8 +96,9 @@
                                             <td class="text-center">
                                                 <a href="{{ route('schedule.edit', $dewa->schedule_details_id) }}"
                                                     class="btn btn-success"><i class="fa fa-edit"></i></a>
-                                                <form action="{{ route('schedule.delete', $dewa->id) }}" method="POST"
-                                                    style="display:inline;">
+                                                <form
+                                                    action="{{ route('schedule.delete', $dewa->schedule_details_id) }}"
+                                                    method="POST" style="display:inline;">
                                                     @csrf
                                                     @method('DELETE')
                                                     <button type="submit" class="btn btn-danger"

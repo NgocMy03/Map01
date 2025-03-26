@@ -41,6 +41,7 @@ class ScheduleController extends Controller
             ->join('schedule_details', 'schedules.id', '=', 'schedule_details.schedule_id')
             ->join('staff', 'staff.id', '=', 'schedule_details.staff_id')
             ->join('stores', 'stores.id', '=', 'staff.store_id')
+            ->where('schedule_details.deleted_at', null)
             ->select(
                 'schedules.*',
                 'stores.ten as ts',
@@ -119,6 +120,7 @@ class ScheduleController extends Controller
 
     public function deleteSchedule($id)
     {
+
         $schedule = $this->scheduleRepo->findById($id);
 
         if ($this->scheduleSer->destroy($id)) {
