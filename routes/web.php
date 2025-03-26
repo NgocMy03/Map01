@@ -38,6 +38,6 @@ Route::get('schedule/create', [ScheduleController::class, 'createSchedule'])->na
 Route::get('schedule/{id}/edit', [ScheduleController::class, 'editSchedule'])->where(['id' => '[0-9]+'])->name('schedule.edit');
 Route::post('schedule/store', [ScheduleController::class, 'storeSchedule'])->name('schedule.storeSchedule');
 Route::post('schedule/{id}/update', [ScheduleController::class, 'updateSchedule'])->where(['id' => '[0-9]+'])->name('schedule.update');
-Route::delete('schedule/{id}/delete', [ScheduleController::class, 'deleteProduct'])->name('schedule.delete');
+Route::delete('schedule/{id}/delete', [ScheduleController::class, 'deleteSchedule'])->name('schedule.delete');
 
 Route::post('/rate-store', [RateController::class, 'store'])->name('rate.store');
