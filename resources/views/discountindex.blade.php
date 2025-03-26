@@ -1,6 +1,3 @@
-{{-- @php
-    dd($schedule);
-@endphp --}}
 <!DOCTYPE html>
 @toastifyCss
 <html>
@@ -10,7 +7,7 @@
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-    <title>Lịch làm việc</title>
+    <title>Khuyến mãi</title>
 
     <link href="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/css/select2.min.css" rel="stylesheet" />
 
@@ -26,9 +23,10 @@
         <div class="gray-bg">
             <div class="row wrapper border-bottom white-bg page-heading">
                 <div class="col-lg-8">
-                    <h2>Quản lý lịch làm việc</h2>
+                    <h2>Quản lý khuyến mãi</h2>
                     <ol class="breadcrumb" style="margin-bottom: 10px">
-                        <li class="active"><strong>Quản lý lịch làm việc</strong></li>
+                        <li class="active"><strong>Quản lý khuyến mãi</strong></li>
+
                     </ol>
                 </div>
 
@@ -41,18 +39,17 @@
                     <a id="select-product" href="{{ route('product.index') }}" title="Sản phẩm"><i
                             class="fa fa-plus"></i></a>
                 </div>
+
             </div>
-
-
             <div class="row mt20">
                 <div class="col-lg-12">
                     <div class="ibox float-e-margins">
                         <div class="ibox-title">
-                            <h5>Danh sách lịch làm việc</h5>
+                            <h5>Danh sách khuyến mãi</h5>
                         </div>
 
                         <div class="ibox-content">
-                            <form action="{{ route('schedule.index') }}" method="GET">
+                            <form action="{{ route('discount.index') }}" method="GET">
                                 <div class="filter-wrapper">
                                     <div class="uk-flex uk-flex-middle uk-flex-space-between">
                                         <div class="perpage">
@@ -64,8 +61,8 @@
                                                     <div class="input-group">
                                                     </div>
                                                 </div>
-                                                <a href="{{ route('schedule.create') }}" class="btn btn-danger"><i
-                                                        class="fa fa-plus mr5"></i>Thêm mới lịch làm việc</a>
+                                                <a href="{{ route('discount.create') }}" class="btn btn-danger"><i
+                                                        class="fa fa-plus mr5"></i>Thêm mới khuyến mãi</a>
                                             </div>
                                         </div>
                                     </div>
@@ -74,44 +71,40 @@
                             <table class="table table-striped table-bordered">
                                 <thead>
                                     <tr>
-                                        <th>Tên lịch làm việc</th>
-                                        <th>Chức vụ</th>
-                                        <th>Tên nhân viên</th>
-                                        <th>Cửa hàng</th>
-                                        <th>Khung giờ</th>
-                                        <th>Ngày làm</th>
+                                        <th>Mã khuyễn mãi</th>
+                                        <th>Tên chương trình khuyến mãi</th>
+                                        <th>Thời gian áp dụng</th>
+                                        <th>Mức giảm giá</th>
                                         <th class="text-center">Thao tác</th>
                                     </tr>
                                 </thead>
-
                                 <tbody>
-                                    @foreach ($schedule as $dewa)
-                                        <tr>
-                                            <td>{{ $dewa->ten }}</td>
-                                            <td>{{ $dewa->cv }}</td>
-                                            <td>{{ $dewa->tennv }}</td>
-                                            <td>{{ $dewa->ts }}</td>
-                                            <td>{{ $dewa->thoigianbatdau }} - {{ $dewa->thoigianketthuc }}</td>
-                                            <td>{{ $dewa->ngay }}</td>
-                                            <td class="text-center">
-                                                <a href="{{ route('schedule.edit', $dewa->schedule_details_id) }}"
-                                                    class="btn btn-success"><i class="fa fa-edit"></i></a>
-                                                <form action="{{ route('schedule.delete', $dewa->id) }}" method="POST"
-                                                    style="display:inline;">
-                                                    @csrf
-                                                    @method('DELETE')
-                                                    <button type="submit" class="btn btn-danger"
-                                                        onclick="return confirm('Bạn có chắc chắn muốn xóa mục này?')">
-                                                        <i class="fa fa-trash"></i>
-                                                    </button>
-                                                </form>
-                                            </td>
-                                        </tr>
-                                    @endforeach
+                                    @if (isset($discount) && $discount->isNotEmpty())
+                                        @foreach ($discount as $disc)
+                                            <tr>
+                                                <td>{{ $disc->id }}</td>
+                                                <td>{{ $disc->chuongtrinhKM }}</td>
+                                                <td>{{ $disc->thoigianapdung }}</td>
+                                                <td>{{ $disc->mucgiamgia }}</td>
+                                                <td class="text-center">
+                                                    <a href="{{ route('discount.edit', $disc->id) }}"
+                                                        class="btn btn-success"><i class="fa fa-edit"></i></a>
+                                                    <form action="{{ route('discount.delete', $disc->id) }}"
+                                                        method="POST" style="display:inline;">
+                                                        @csrf
+                                                        @method('DELETE')
+                                                        <button type="submit" class="btn btn-danger"
+                                                            onclick="return confirm('Bạn có chắc chắn muốn xóa mục này?')">
+                                                            <i class="fa fa-trash"></i>
+                                                        </button>
+                                                    </form>
+                                                </td>
+                                            </tr>
+                                        @endforeach
+                                    @endif
                                 </tbody>
-
                             </table>
-                            {{ $schedule->links('pagination::bootstrap-4') }}
+                            {{ $discount->links('pagination::bootstrap-4') }}
                         </div>
                     </div>
                 </div>

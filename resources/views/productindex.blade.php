@@ -31,17 +31,22 @@
                 </div>
 
                 <div class="col-lg-1 col-lg-offset-3 p-2"
-                    style="border: 1px solid black; padding: 5px; width: 30px; font-size: 2rem; margin-top:30px; margin-right:10px;">
+                    style="border: 1px solid black; padding: 5px; width: 30px; font-size: 2rem; margin-top:30px; margin-right:1.5px; ">
                     <a id="back-to-home" href="{{ route('Home') }}" title="Về trang chủ"><i class="fa fa-home"></i></a>
                 </div>
                 <div class="col-lg-1 p-2"
-                    style="border: 1px solid black; padding: 5px; width: 30px; font-size: 2rem; margin-top:30px;">
+                    style="border: 1px solid black; padding: 5px; width: 30px; font-size: 2rem; margin-top:30px; margin-right:1.5px;">
                     <a id="select-sche" href="{{ route('schedule.index') }}" title="Lịch làm việc"><i
                             class="fa fa-calendar"></i></a>
                 </div>
                 <div class="col-lg-1 p-2"
-                    style="border: 1px solid black; padding: 5px; width: 30px; font-size: 2rem; margin-top:30px; margin-left:10px;">
-                    <a id="select-sche" href="{{ route('logout') }}" title="Lịch làm việc"><i
+                    style="border: 1px solid black; padding: 5px; width: 30px; font-size: 2rem; margin-top:30px; margin-right:1.5px; ">
+                    <a id="select-sche" href="{{ route('discount.index') }}" title="Khuyễn mãi"><i
+                            class="fa fa-tags"></i></a>
+                </div>
+                <div class="col-lg-1 p-2"
+                    style="border: 1px solid black; padding: 5px; width: 30px; font-size: 2rem; margin-top:30px; margin-right:1.5px;">
+                    <a id="select-sche" href="{{ route('logout') }}" title="Đăng xuất"><i
                             class="fa fa-sign-out"></i></a>
                 </div>
                 <div class="text-right" style="margin: 5px 10px -3px;">
@@ -56,9 +61,8 @@
                         </p>
                     </strong>
                 </div>
+
             </div>
-
-
             <div class="row mt20">
                 <div class="col-lg-12">
                     <div class="ibox float-e-margins">

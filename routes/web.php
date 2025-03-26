@@ -2,6 +2,7 @@
 
 use App\Http\Controllers\HomeController;
 use App\Http\Controllers\ProductController;
+use App\Http\Controllers\DiscountController;
 use App\Http\Controllers\RateController;
 use App\Http\Controllers\StoreController;
 use App\Http\Controllers\ScheduleController;
@@ -38,6 +39,13 @@ Route::get('schedule/create', [ScheduleController::class, 'createSchedule'])->na
 Route::get('schedule/{id}/edit', [ScheduleController::class, 'editSchedule'])->where(['id' => '[0-9]+'])->name('schedule.edit');
 Route::post('schedule/store', [ScheduleController::class, 'storeSchedule'])->name('schedule.storeSchedule');
 Route::post('schedule/{id}/update', [ScheduleController::class, 'updateSchedule'])->where(['id' => '[0-9]+'])->name('schedule.update');
-Route::delete('schedule/{id}/delete', [ScheduleController::class, 'deleteProduct'])->name('schedule.delete');
+Route::delete('schedule/{id}/delete', [ScheduleController::class, 'deleteSchedule'])->name('schedule.delete');
 
 Route::post('/rate-store', [RateController::class, 'store'])->name('rate.store');
+
+ Route::get('discount/index', [DiscountController::class, 'indexDiscount'])->name('discount.index');
+ Route::get('discount/create', [DiscountController::class, 'createDiscount'])->name('discount.create');
+ Route::get('discount/{id}/edit', [DiscountController::class, 'editDiscount'])->where(['id' => '[0-9]+'])->name('discount.edit');
+ Route::post('discount/store', [DiscountController::class, 'storeDiscount'])->name('discount.storeDiscount');
+ Route::post('discount/{id}/update', [DiscountController::class, 'updateDiscount'])->where(['id' => '[0-9]+'])->name('discount.update');
+ Route::delete('discount/{id}/delete', [DiscountController::class, 'deleteDiscount'])->name('discount.delete');

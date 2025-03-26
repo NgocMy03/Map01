@@ -10,6 +10,7 @@ use App\Http\Services\ScheduleDetailService;
 use App\Http\Requests\ScheduleRequest;
 use App\Http\Requests\UpdateScheduleRequest;
 use App\Models\Schedule;
+use App\Models\ScheduleDetail;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
@@ -115,9 +116,11 @@ class ScheduleController extends Controller
         return redirect()->route('schedule.index');
     }
 
+
     public function deleteSchedule($id)
     {
         $schedule = $this->scheduleRepo->findById($id);
+
         if ($this->scheduleSer->destroy($id)) {
             toastify()->success('Xoá bản ghi thành công.');
             return redirect()->route('schedule.index');
