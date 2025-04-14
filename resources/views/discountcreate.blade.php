@@ -90,12 +90,16 @@
                                         </select>
                                     </div>
                                 </div>
-                            </div>
-                            <div class="row mb15">
                                 <div class="col-lg-6">
                                     <div class="form-row">
-                                        <label for="" class="control-label text-left">Thời gian áp dụng<span class="text-danger">(*)</span></label>
-                                        <input type="date" name="thoigianapdung" value="{{ old('thoigianapdung', ($discount->thoigianapdung) ?? '') }}" class="form-control" placeholder="" autocomplete="off">
+                                        <label for="" class="control-label text-left">Thời gian bắt đầu<span class="text-danger">(*)</span></label>
+                                        <input type="date" name="thoigianbatdau" value="{{ old('thoigianbatdau', ($discount->thoigianbatdau) ?? '') }}" class="form-control" placeholder="" autocomplete="off">
+                                    </div>
+                                </div>
+                                <div class="col-lg-6">
+                                    <div class="form-row">
+                                        <label for="" class="control-label text-left">Thời gian kết thúc<span class="text-danger">(*)</span></label>
+                                        <input type="date" name="thoigianketthuc" value="{{ old('thoigianketthuc', ($discount->thoigianketthuc) ?? '') }}" class="form-control" placeholder="" autocomplete="off">
                                     </div>
                                 </div>
                             </div>

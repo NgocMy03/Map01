@@ -73,7 +73,8 @@
                                     <tr>
                                         <th>Mã khuyễn mãi</th>
                                         <th>Tên chương trình khuyến mãi</th>
-                                        <th>Thời gian áp dụng</th>
+                                        <th>Thời gian bắt đầu</th>
+                                        <th>Thời gian kết thúc</th>
                                         <th>Mức giảm giá</th>
                                         <th class="text-center">Thao tác</th>
                                     </tr>
@@ -84,7 +85,8 @@
                                             <tr>
                                                 <td>{{ $disc->id }}</td>
                                                 <td>{{ $disc->chuongtrinhKM }}</td>
-                                                <td>{{ $disc->thoigianapdung }}</td>
+                                                <td>{{ $disc->thoigianbatdau }}</td>
+                                                <td>{{ $disc->thoigianketthuc }}</td>
                                                 <td>{{ $disc->mucgiamgia }}</td>
                                                 <td class="text-center">
                                                     <a href="{{ route('discount.edit', $disc->id) }}"

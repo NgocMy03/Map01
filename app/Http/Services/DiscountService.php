@@ -26,7 +26,8 @@ class DiscountService{
             // Tạo chương trình khuyến mãi mới
             $discount = Discount::create([
                 'chuongtrinhKM' => $request->chuongtrinhKM,
-                'thoigianapdung' => $request->thoigianapdung,
+                'thoigianbatdau' => $request->thoigianbatdau,
+                'thoigianketthuc' => $request->thoigianketthuc,
                 'mucgiamgia' => $request->mucgiamgia
             ]);
 
@@ -47,7 +48,8 @@ class DiscountService{
             $discount = Discount::findOrFail($id);
             $discount->update([
                 'chuongtrinhKM' => $request->chuongtrinhKM,
-                'thoigianapdung' => $request->thoigianapdung,
+                'thoigianbatdau' => $request->thoigianbatdau,
+                'thoigianketthuc' => $request->thoigianketthuc,
                 'mucgiamgia' => $request->mucgiamgia
             ]);
 

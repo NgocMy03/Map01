@@ -11,7 +11,8 @@ class Discount extends Model
     use HasFactory, SoftDeletes;
     protected $fillable = [
         'chuongtrinhKM',
-        'thoigianapdung',
+        'thoigianbatdau',
+        'thoigianketthuc',
         'mucgiamgia',
         'deleted_at',
     ];

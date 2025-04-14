@@ -25,7 +25,8 @@ class DiscountRequest extends FormRequest
     {
         return [
             'chuongtrinhKM' => 'required|string',
-            'thoigianapdung' => 'required|date',
+            'thoigianbatdau' => 'required|date',
+            'thoigianketthuc' => 'required|date',
             'mucgiamgia' => 'required|string',
         ];
     }
@@ -33,8 +34,10 @@ class DiscountRequest extends FormRequest
     public function messages(): array
     {
         return [
-            'thoigianapdung.required' => 'Thời gian áp dụng là bắt buộc.',
-            'thoigianapdung.date' => 'Thời gian áp dụng phải là một ngày hợp lệ.',
+            'thoigianbatdau.required' => 'Thời gian áp dụng là bắt buộc.',
+            'thoigianbatdau.date' => 'Thời gian áp dụng phải là một ngày hợp lệ.',
+            'thoigianketthuc.required' => 'Thời gian áp dụng là bắt buộc.',
+            'thoigianketthuc.date' => 'Thời gian áp dụng phải là một ngày hợp lệ.',
             'chuongtrinhKM.required' => 'Chương trình khuyến mãi là bắt buộc.',
             'chuongtrinhKM.string' => 'Chương trình khuyến mãi phải là dạng ký tự.',
             'mucgiamgia.required' => 'Mức giảm giá là bắt buộc.',
