@@ -9,7 +9,7 @@
 
 <b style="font-size: 18px;">🚀 Hướng Dẫn Cài Đặt Và Chạy Dự Án Laravel</b>
 <br><b>Yêu cầu hệ thống:</b><br>
-- PHP >= 8.<br>
+- PHP >= 8.0<br>
 - Composer<br>
 - MySQL<br>
 - Visual Studio Code<br>
