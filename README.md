@@ -22,14 +22,14 @@
 - Tạo file <code>.env</code><br>
 - Copy nội dung từ file <code>.env.example</code> và chỉnh sửa lại phần kết nối cơ sở dữ liệu trong file <code>.env</code>:<br>
   <code>DB_DATABASE=ct298map01</code><br>
+- Tạo key ứng dụng:
+  <code>php artisan key:generate</code><br>
 
 <b>Khôi phục cơ sở dữ liệu bằng phpMyAdmin:</b><br>
-+ Mở: <a href="http://localhost/phpmyadmin" target="_blank">http://localhost/phpmyadmin</a><br>
++ Mở: <a href="http://localhost/phpmyadmin" target="_blank">http://localhost/phpmyadmin</a><br> (Bằng Xampp hoặc công cụ tương tự)
 + Tạo database tên <code>ct298map01</code><br>
 + Import file <code>ct298map01.sql</code> vào database vừa tạo<br>
 
-- Tạo key ứng dụng:
-  <code>php artisan key:generate</code><br>
 - Chạy Laravel Server: 
   <code>php artisan serve</code> 
   (Sử dụng <b>Ctrl + Click chuột</b> vào đường dẫn để mở dự án)<br>
